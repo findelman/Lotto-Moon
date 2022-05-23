@@ -23,6 +23,7 @@
     border-radius: 8px;
     height: 40px;
     width: 40px;
+    color: white;
     background: gray;
     display: grid;
     place-content: center;
@@ -38,4 +39,24 @@
 body {
     height: 300vh;
     background: gold;
+}
+.ticket-progress {
+    height: 5px;
+    width: 0;
+    transition: 500ms;
+    background: gray;
+}
+.active {
+    background: blue;
+}
+.ticket-prgoress-wrapper {
+    display: block;
+    width: 100%;
+}
+.out-ticket-number 
+{
+    padding: 20px;
+    background: white;
+    color:black;
+    border: 1px solid black;
 }
