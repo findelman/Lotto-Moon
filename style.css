@@ -37,6 +37,7 @@
     cursor: pointer;
 }
 body {
+    transition: 500ms;
     height: 300vh;
     background: gold;
 }
@@ -55,8 +56,22 @@ body {
 }
 .out-ticket-number 
 {
-    padding: 20px;
+    width: 100%;
+    display: flex;
+}
+.out-number {
+    height: 30px;
+    width: 30px;
+    display: grid;
+    place-content: center;
+    border-radius: 8px;
+    color:white;
+    background: blue;
+}
+.flex {
+    display: flex;
+}
+.basket {
     background: white;
-    color:black;
-    border: 1px solid black;
+    padding: 20px;
 }
