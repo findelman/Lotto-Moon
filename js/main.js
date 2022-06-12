@@ -5,9 +5,10 @@ let amountNumber = 46;
 let limitNumber = 6;
 let biletCount = 0;
 let basketText = document.querySelector(".basket-text");
-let basketContent = document.querySelector('.basket-hidden-content')
-let basketPrice = document.querySelector('.basket-ticket-price')
-let ticketPrice = 200
+let basketContent = document.querySelector(".basket-hidden-content");
+let basketPrice = document.querySelector(".basket-ticket-price");
+
+let ticketPrice = 200;
 
 // let arrayTicketNumber = [];
 
@@ -17,7 +18,7 @@ btnGenerator.addEventListener("click", () => {
 
 // генерация билета
 const ticketGenerate = () => {
-  ticketOutWrapper.innerHTML += `<div class="ticket"><h1 class="ticket-count">${++biletCount} Билет</h1><div class="out-ticket-number"></div><div class="ticket-prgoress-wrapper">
+  ticketOutWrapper.innerHTML += `<div class="ticket"><div class="ticket-remove"></div><h1 class="ticket-count">${++biletCount} Билет</h1><div class="out-ticket-number"></div><div class="ticket-prgoress-wrapper">
     <div class="ticket-progress"></div>
 </div><div class="ticket-numlist"></div> <button class="ticket-autofill">Собрать билет</button></div>`;
   let ticketNumList = document.querySelectorAll(".ticket-numlist");
@@ -40,8 +41,9 @@ const ticketGenerate = () => {
 function ticketClick(ticket, array) {
   ticket.forEach((ticket) => {
     let tikcetsNum = ticket.querySelectorAll(".ticket-num");
-    let ticketBtn = ticket.querySelector('.ticket-autofill')
+    let ticketBtn = ticket.querySelector(".ticket-autofill");
     let outTicketNumber = ticket.querySelector(".out-ticket-number");
+    let ticketRemove = ticket.querySelector('.ticket-remove')
     ticket.array = [];
 
     tikcetsNum.forEach((ticketsNumBtn) => {
@@ -49,49 +51,66 @@ function ticketClick(ticket, array) {
         ticketsNumBtn.classList.toggle("active");
         let numActive = ticket.querySelectorAll(".active").length;
 
-        limitCheck(numActive, tikcetsNum,ticket);
+        limitCheck(numActive, tikcetsNum, ticket);
         progress(ticket, numActive);
         numArrayPush(ticketsNumBtn, ticket.array);
         outNumber(ticket.array, outTicketNumber);
-        console.log(outTicketNumber);
+        // console.log(outTicketNumber);
       });
     });
 
-    //Собрать билет 
-    ticketBtn.onclick = ()=> {
-      let randomArr = []
-      ticket.array = []
-      tikcetsNum.forEach((ticketsNumBtn) => {
-        if(ticketsNumBtn.classList.contains('active')) {
-          ticketsNumBtn.classList.remove('active')
-        }
-      })
-      for(let i = 0; i < limitNumber; i++) {
-        let random = Math.round(Math.random() * (amountNumber -1))
-        let randomDuplicate = randomArr.includes(random)
-        if(!randomDuplicate) {
-          randomArr.push(random)
-        }
-        else if(randomDuplicate) {
-          while(randomDuplicate) {
-             random = Math.round(Math.random() *( amountNumber -1 )) 
-             randomDuplicate = randomArr.includes(random)
-            if(!randomDuplicate) {
-              randomArr.push(random)
-            } 
+    ticketAutofill(ticketBtn,ticket,tikcetsNum)
+    ticketRemoveF(ticketRemove,ticket)
+   
+  });
+}
+
+
+// Собрать билет
+const ticketAutofill = (ticketBtn,ticket,tikcetsNum)=> {
+  ticketBtn.onclick = () => {
+    let randomArr = [];
+    ticket.array = [];
+    tikcetsNum.forEach((ticketsNumBtn) => {
+      if (ticketsNumBtn.classList.contains("active")) {
+        ticketsNumBtn.classList.remove("active");
+      }
+    });
+    for (let i = 0; i < limitNumber; i++) {
+      let random = Math.round(Math.random() * (amountNumber - 1));
+      let randomDuplicate = randomArr.includes(random);
+      if (!randomDuplicate) {
+        randomArr.push(random);
+      } else if (randomDuplicate) {
+        while (randomDuplicate) {
+          random = Math.round(Math.random() * (amountNumber - 1));
+          randomDuplicate = randomArr.includes(random);
+          if (!randomDuplicate) {
+            randomArr.push(random);
           }
         }
-
-        console.log(randomArr)
-        console.log(random)
-        // tikcetsNum[random].click()
-      }
-      for(let i = 0; i < limitNumber; i++) {
-        console.log(randomArr[i])
-        tikcetsNum[randomArr[i]].click();
       }
     }
-  });
+    for (let i = 0; i < limitNumber; i++) {
+      tikcetsNum[randomArr[i]].click();
+    }
+  };
+}
+
+// Удалить билет
+
+const ticketRemoveF = (ticketRemove,ticket)=> {
+
+  ticketRemove.addEventListener('click', ()=> {
+    // console.log(ticket)
+    ticket.remove()
+    let ticketq = document.querySelectorAll(".ticket");
+    ticketq.forEach(tickets => {
+      let counter = tickets.querySelector('.ticket-count')
+      // counter.innerHTML = biletCount-- 
+    })
+    // --biletCount
+  })
 }
 
 // const animationDelayMultiplier = 0.15;
@@ -105,9 +124,8 @@ const outNumber = (array, outTicketNumber) => {
   }
 };
 
-// Проверка на заполненость  
+// Проверка на заполненость
 const limitCheck = (numActive, tikcetsNum, ticket) => {
-
   if (numActive === limitNumber) {
     tikcetsNum.forEach((all) => {
       if (!all.classList.contains("active")) {
@@ -115,7 +133,7 @@ const limitCheck = (numActive, tikcetsNum, ticket) => {
       }
     });
     // добовляем атрибут если билет собран
-    ticket.setAttribute('data-ticket-complete', 'true')
+    ticket.setAttribute("data-ticket-complete", "true");
   } else if (numActive !== limitNumber) {
     tikcetsNum.forEach((all) => {
       {
@@ -123,24 +141,24 @@ const limitCheck = (numActive, tikcetsNum, ticket) => {
       }
     });
     ticket.setAttribute("data-ticket-complete", "false");
-
   }
-  ticketPriceAmount()
+  ticketPriceAmount();
 };
 
 // Счетчик суммы в баскете
 const ticketPriceAmount = () => {
-  let ticketComplete = document.querySelectorAll('.ticket[data-ticket-complete="true"]').length
-  basketPrice.textContent = ticketPrice * ticketComplete
-  if(ticketComplete >= 1) {
-    basketText.innerHTML = 'Начнем же ?'
-    basketContent.classList.add('show')
+  let ticketComplete = document.querySelectorAll(
+    '.ticket[data-ticket-complete="true"]'
+  ).length;
+  basketPrice.textContent = ticketPrice * ticketComplete;
+  if (ticketComplete >= 1) {
+    basketText.innerHTML = "Начнем же ?";
+    basketContent.classList.add("show");
+  } else {
+    basketText.innerHTML = "Чтобы начать игру соберите хотя бы 1 билет";
+    basketContent.classList.remove("show");
   }
-  else {
-      basketText.innerHTML = 'Чтобы начать игру соберите хотя бы 1 билет'
-    basketContent.classList.remove('show')
-  }
-}
+};
 
 ticketGenerate();
 
