@@ -1,3 +1,33 @@
+* {
+    /* padding: 0; */
+    /* margin: 0; */
+    box-sizing: border-box;
+    /* text-decoration: none; */
+    /* list-style: none; */
+}
+body {
+    transition: 500ms;
+    height: 300vh;
+    background: gold;
+}
+:root {
+    --container-width: 1140px;
+}
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    position: relative;
+}
+.fixed-container {
+    position: fixed;
+    width: 100%;
+}
+.absolute-container {
+    max-width: var(--container-width);
+}
+.ticket-content {
+    margin-top: 30px;
+}
 .btn-generate {
     padding: 10px 35px;
     background: blue;
@@ -30,8 +60,10 @@
     padding: 50% 0;
 }
 .tickets-out-wrapper {
-    width: 100%;
+    /* width: 100%; */
+    width: 70%;
 }
+
 .ticket-numlist {
     grid: auto / repeat(auto-fit,minmax(50px,1fr));
     display: grid;
@@ -40,11 +72,6 @@
 }
 .btn {
     cursor: pointer;
-}
-body {
-    transition: 500ms;
-    height: 300vh;
-    background: gold;
 }
 .ticket-progress {
     height: 5px;
@@ -62,6 +89,7 @@ body {
 .out-ticket-number 
 {
     width: 100%;
+    gap: 5px;
     display: flex;
 }
 .out-number {
@@ -69,18 +97,51 @@ body {
     width: 30px;
     display: grid;
     place-content: center;
-    border-radius: 8px;
+    border-radius: 100%;
     color:white;
     background: blue;
+    /* animation: outNumbe rOpacity 2s infinite; */
+}
+@keyframes outNumberOpacity {
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+    
 }
 .flex {
     display: flex;
 }
 .basket {
+    text-align: center;
+    margin-left: auto;
     background: white;
+    right: 0;
     padding: 20px;
+    width: 28%;
+    border-radius: 20px;
 }
 [disabled] {
     opacity: 0.3;
     pointer-events: none;
+}
+.tickets-content {
+    align-items: flex-start;    
+    gap: 30px;
+}
+.basket-btn {
+    display: table;
+    margin: 0 auto;
+}
+.basket-hidden-content {
+    opacity: 0;
+    visibility: hidden;
+    display: none;
+}
+.show {
+    display: block;
+    opacity: 1;
+    visibility: visible;
 }
