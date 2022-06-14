@@ -180,10 +180,20 @@ const ticketPriceAmount = (ticket,numActive,ticketBigCount) => {
   let ticketComplete = document.querySelectorAll(
     '.ticket[data-ticket-complete="true"]'
   ).length;
+  let ticketCompleted = document.querySelectorAll(
+    '.ticket[data-ticket-complete="true"]'
+  );
+  ticketCompleted.forEach((element, index) => {
+    if (element.hasAttrbute('data-big-stavka')) {
 
-  for(let i = 0; i < ticketComplete; i++) {
-    basketObj[i] = 200
-  }
+      basketObj[index] = (element.dataset.bigStavka * 9) * ticketPrice
+    } else {
+      basketObj[index] = parseInt(ticketPrice)
+    }
+  });
+  // for(let i = 0; i < ticketComplete; i++) {
+  //   basketObj[i] = 200
+  // }
   basketPrice.textContent = ticketPrice * ticketComplete;
   if(numActive > 6) {
     // basketObj.push += '123'
