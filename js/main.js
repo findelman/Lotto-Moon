@@ -7,6 +7,8 @@ let biletCount = 0;
 let basketText = document.querySelector(".basket-text");
 let basketContent = document.querySelector(".basket-hidden-content");
 let basketPrice = document.querySelector(".basket-ticket-price");
+let basketObj = {}
+let summ = 0
 
 let ticketPrice = 200;
 
@@ -45,16 +47,37 @@ function ticketClick(ticket, array) {
     let outTicketNumber = ticket.querySelector(".out-ticket-number");
     let ticketRemove = ticket.querySelector('.ticket-remove')
     ticket.array = [];
-
     tikcetsNum.forEach((ticketsNumBtn) => {
       ticketsNumBtn.addEventListener("click", () => {
         ticketsNumBtn.classList.toggle("active");
         let numActive = ticket.querySelectorAll(".active").length;
-
+        let ticketCompleted = document.querySelectorAll(
+          '.ticket[data-ticket-complete="true"]'
+        );
+ 
         limitCheck(numActive, tikcetsNum, ticket);
+        ticketCompleted.forEach((element, index) => {
+          if (element.dataset.bigStavka !== 'false') {
+      
+            basketObj[index] = (element.dataset.bigStavka * 9) * ticketPrice
+          } else {
+            basketObj[index] = parseInt(ticketPrice)
+          }
+          for(let key in basketObj) {
+            summ = 0
+            summ += basketObj[key]
+          }
+        console.log(summ)
+
+        });
+ console.log(basketObj)
+
+        basketPrice.textContent = summ;
         progress(ticket, numActive);
         numArrayPush(ticketsNumBtn, ticket.array);
         outNumber(ticket.array, outTicketNumber);
+  ticketPriceAmount(ticket,numActive,summ);
+
         // console.log(outTicketNumber);
       });
     });
@@ -64,7 +87,23 @@ function ticketClick(ticket, array) {
    
   });
 }
+// Счетчик суммы в баскете
+const ticketPriceAmount = (ticket,numActive,ticketBigCount, summ) => {
+  let ticketComplete = document.querySelectorAll(
+    '.ticket[data-ticket-complete="true"]'
+  ).length;
 
+ 
+  
+
+  if (ticketComplete >= 1) {
+    basketText.innerHTML = "Начнем же ?";
+    basketContent.classList.add("show");
+  } else {
+    basketText.innerHTML = "Чтобы начать игру соберите хотя бы 1 билет";
+    basketContent.classList.remove("show");
+  }
+};
 
 // Собрать билет
 const ticketAutofill = (ticketBtn,ticket,tikcetsNum)=> {
@@ -113,10 +152,8 @@ const ticketRemoveF = (ticketRemove,ticket)=> {
   })
 }
 
-// const animationDelayMultiplier = 0.15;
 // Отрисовка активных цифр
 const outNumber = (array, outTicketNumber) => {
-  // const animationDelay = 1 * animationDelayMultiplier + 's';
   outTicketNumber.innerHTML = ``;
   array.sort((a, b) => a - b);
   for (let key of array) {
@@ -128,7 +165,6 @@ const outNumber = (array, outTicketNumber) => {
 const limitCheck = (numActive, tikcetsNum, ticket) => {
   let ticketBigCount = parseInt(ticket.dataset.bigStavka)
 
-  console.log(typeof(ticketBigCount))
   if (numActive === limitNumber) {
     // limitNumber = 10
 
@@ -149,8 +185,6 @@ const limitCheck = (numActive, tikcetsNum, ticket) => {
    if( numActive <= 6) {
     limitNumber = 6
     ticket.setAttribute('data-big-stavka','false');
-    console.log('123')
-    // ticket.setAttribute("data-ticket-complete", "false");
   } 
    if(numActive < 6) {
      ticket.setAttribute("data-ticket-complete", "false");
@@ -169,48 +203,9 @@ const limitCheck = (numActive, tikcetsNum, ticket) => {
     // ticket.setAttribute("data-ticket-complete", "false");
   }
   
-  ticketPriceAmount(ticket,numActive,ticketBigCount);
 };
-let basketObj = {}
-let key = 'key'
 
-console.log(basketObj)
-// Счетчик суммы в баскете
-const ticketPriceAmount = (ticket,numActive,ticketBigCount) => {
-  let ticketComplete = document.querySelectorAll(
-    '.ticket[data-ticket-complete="true"]'
-  ).length;
-  let ticketCompleted = document.querySelectorAll(
-    '.ticket[data-ticket-complete="true"]'
-  );
-  ticketCompleted.forEach((element, index) => {
-    if (element.hasAttrbute('data-big-stavka')) {
 
-      basketObj[index] = (element.dataset.bigStavka * 9) * ticketPrice
-    } else {
-      basketObj[index] = parseInt(ticketPrice)
-    }
-  });
-  // for(let i = 0; i < ticketComplete; i++) {
-  //   basketObj[i] = 200
-  // }
-  basketPrice.textContent = ticketPrice * ticketComplete;
-  if(numActive > 6) {
-    // basketObj.push += '123'
-
-    console.log(basketObj);
-    console.log(ticketBigCount)
-    basketPrice.textContent = ticketPrice * ticketComplete * ticketBigCount[2,4]
-  }
-  if (ticketComplete >= 1) {
-    basketText.innerHTML = "Начнем же ?";
-    basketContent.classList.add("show");
-  } else {
-    basketText.innerHTML = "Чтобы начать игру соберите хотя бы 1 билет";
-    basketContent.classList.remove("show");
-  }
-  console.log(basketPrice)
-};
 
 ticketGenerate();
 
