@@ -126,31 +126,72 @@ const outNumber = (array, outTicketNumber) => {
 
 // Проверка на заполненость
 const limitCheck = (numActive, tikcetsNum, ticket) => {
+  let ticketBigCount = parseInt(ticket.dataset.bigStavka)
+
+  console.log(typeof(ticketBigCount))
   if (numActive === limitNumber) {
+    // limitNumber = 10
+
     tikcetsNum.forEach((all) => {
       if (!all.classList.contains("active")) {
-        all.setAttribute("disabled", "true");
+          // all.setAttribute('disabled','')
       }
     });
     // добовляем атрибут если билет собран
-    ticket.setAttribute("data-ticket-complete", "true");
-  } else if (numActive !== limitNumber) {
+    ticket.setAttribute("data-ticket-complete", `true`);
+
+  } 
+  if(numActive > limitNumber) {
+    limitNumber = 10
+    ticket.setAttribute('data-big-stavka','true');
+   
+  } 
+   if( numActive <= 6) {
+    limitNumber = 6
+    ticket.setAttribute('data-big-stavka','false');
+    console.log('123')
+    // ticket.setAttribute("data-ticket-complete", "false");
+  } 
+   if(numActive < 6) {
+     ticket.setAttribute("data-ticket-complete", "false");
+  }
+  if(numActive > 6) {
+    ticket.setAttribute("data-big-stavka", `${numActive - 6}`);
+     ticketBigCount = parseInt(ticket.dataset.bigStavka)
+
+  }
+   if (numActive !== limitNumber) {
     tikcetsNum.forEach((all) => {
       {
         all.removeAttribute("disabled");
       }
     });
-    ticket.setAttribute("data-ticket-complete", "false");
+    // ticket.setAttribute("data-ticket-complete", "false");
   }
-  ticketPriceAmount();
+  
+  ticketPriceAmount(ticket,numActive,ticketBigCount);
 };
+let basketObj = {}
+let key = 'key'
 
+console.log(basketObj)
 // Счетчик суммы в баскете
-const ticketPriceAmount = () => {
+const ticketPriceAmount = (ticket,numActive,ticketBigCount) => {
   let ticketComplete = document.querySelectorAll(
     '.ticket[data-ticket-complete="true"]'
   ).length;
+
+  for(let i = 0; i < ticketComplete; i++) {
+    basketObj[i] = 200
+  }
   basketPrice.textContent = ticketPrice * ticketComplete;
+  if(numActive > 6) {
+    // basketObj.push += '123'
+
+    console.log(basketObj);
+    console.log(ticketBigCount)
+    basketPrice.textContent = ticketPrice * ticketComplete * ticketBigCount[2,4]
+  }
   if (ticketComplete >= 1) {
     basketText.innerHTML = "Начнем же ?";
     basketContent.classList.add("show");
@@ -158,6 +199,7 @@ const ticketPriceAmount = () => {
     basketText.innerHTML = "Чтобы начать игру соберите хотя бы 1 билет";
     basketContent.classList.remove("show");
   }
+  console.log(basketPrice)
 };
 
 ticketGenerate();
