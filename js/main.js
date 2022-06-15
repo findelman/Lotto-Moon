@@ -41,7 +41,7 @@ const ticketGenerate = () => {
 
 // Клики по цифрам внутри определенного билета
 function ticketClick(ticket, array) {
-  ticket.forEach((ticket) => {
+  ticket.forEach((ticket,index) => {
     let tikcetsNum = ticket.querySelectorAll(".ticket-num");
     let ticketBtn = ticket.querySelector(".ticket-autofill");
     let outTicketNumber = ticket.querySelector(".out-ticket-number");
@@ -52,24 +52,20 @@ function ticketClick(ticket, array) {
         ticketsNumBtn.classList.toggle("active");
         let numActive = ticket.querySelectorAll(".active").length;
         let ticketCompleted = document.querySelectorAll(
-          '.ticket[data-ticket-complete="true"]'
+          '.ticket'
         );
- 
-        limitCheck(numActive, tikcetsNum, ticket);
-        ticketCompleted.forEach((element, index) => {
-          if (element.dataset.bigStavka !== 'false') {
-      
-            basketObj[index] = (element.dataset.bigStavka * 9) * ticketPrice
-          } else {
-            basketObj[index] = parseInt(ticketPrice)
+          if(ticket.dataset.ticketComplete === 'true') {
+            basketObj[index] = (ticket.dataset.bigStavka * 9) * ticketPrice
           }
+          summ = 0;
+
           for(let key in basketObj) {
-            summ = 0
             summ += basketObj[key]
           }
-        console.log(summ)
+          console.log(summ)
+        limitCheck(numActive, tikcetsNum, ticket);
+    
 
-        });
  console.log(basketObj)
 
         basketPrice.textContent = summ;
@@ -78,7 +74,6 @@ function ticketClick(ticket, array) {
         outNumber(ticket.array, outTicketNumber);
   ticketPriceAmount(ticket,numActive,summ);
 
-        // console.log(outTicketNumber);
       });
     });
 
