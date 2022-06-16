@@ -7,11 +7,14 @@ let biletCount = 0;
 let basketText = document.querySelector(".basket-text");
 let basketContent = document.querySelector(".basket-hidden-content");
 let basketPrice = document.querySelector(".basket-ticket-price");
-let basketObj = {}
-let summ = 0
-
+let basketObj = {};
+let summ = 0;
+let filterTicket = document.querySelector(".filter-tickets");
 let ticketPrice = 200;
 
+filterTicket.onclick = () => {
+  ticketOutWrapper.classList.toggle("ticket-column");
+};
 // let arrayTicketNumber = [];
 
 btnGenerator.addEventListener("click", () => {
@@ -25,7 +28,6 @@ const ticketGenerate = () => {
 </div><div class="ticket-numlist"></div> <button class="ticket-autofill">Собрать билет</button></div>`;
   let ticketNumList = document.querySelectorAll(".ticket-numlist");
   let ticket = document.querySelectorAll(".ticket");
-  // let ticketBtn = document.querySelectorAll('.ticket-autofill')
   ticketNumList.forEach((elem) => {
     if (elem.innerHTML == "") {
       for (let i = 1; i <= amountNumber; i++) {
@@ -41,55 +43,57 @@ const ticketGenerate = () => {
 
 // Клики по цифрам внутри определенного билета
 function ticketClick(ticket, array) {
-  ticket.forEach((ticket,index) => {
+  ticket.forEach((ticket, index) => {
     let tikcetsNum = ticket.querySelectorAll(".ticket-num");
-    let ticketBtn = ticket.querySelector(".ticket-autofill");
+    let ticketBtnAutoFill = ticket.querySelector(".ticket-autofill");
     let outTicketNumber = ticket.querySelector(".out-ticket-number");
-    let ticketRemove = ticket.querySelector('.ticket-remove')
+    let ticketRemove = ticket.querySelector(".ticket-remove");
     ticket.array = [];
+
     tikcetsNum.forEach((ticketsNumBtn) => {
       ticketsNumBtn.addEventListener("click", () => {
         ticketsNumBtn.classList.toggle("active");
         let numActive = ticket.querySelectorAll(".active").length;
-        let ticketCompleted = document.querySelectorAll(
-          '.ticket'
-        );
-          if(ticket.dataset.ticketComplete === 'true') {
-            basketObj[index] = (ticket.dataset.bigStavka * 9) * ticketPrice
-          }
-          summ = 0;
 
-          for(let key in basketObj) {
-            summ += basketObj[key]
-          }
-          console.log(summ)
+        
         limitCheck(numActive, tikcetsNum, ticket);
-    
-
- console.log(basketObj)
-
-        basketPrice.textContent = summ;
         progress(ticket, numActive);
         numArrayPush(ticketsNumBtn, ticket.array);
         outNumber(ticket.array, outTicketNumber);
-  ticketPriceAmount(ticket,numActive,summ);
-
+        ticketPriceAmount(ticket, index);
       });
     });
 
-    ticketAutofill(ticketBtn,ticket,tikcetsNum)
-    ticketRemoveF(ticketRemove,ticket)
-   
+    ticketAutofill(ticketBtnAutoFill, ticket, tikcetsNum);
+    ticketRemoveF(ticketRemove, ticket);
   });
 }
 // Счетчик суммы в баскете
-const ticketPriceAmount = (ticket,numActive,ticketBigCount, summ) => {
+const ticketPriceAmount = (ticket, index) => {
   let ticketComplete = document.querySelectorAll(
     '.ticket[data-ticket-complete="true"]'
   ).length;
 
- 
-  
+  if (ticket.dataset.ticketComplete === "true") {
+    basketObj[index] = ticketPrice;
+    if (ticket.dataset.bigStavka !== "false") {
+      basketObj[index] = ticket.dataset.bigStavka * 9 * ticketPrice;
+    }
+  } 
+  else {
+    delete basketObj[index];
+  }
+
+  summ = 0;
+
+  for (let key in basketObj) {
+    summ += basketObj[key];
+  }
+
+  console.log(basketObj);
+  console.log(summ);
+
+  basketPrice.textContent = summ;
 
   if (ticketComplete >= 1) {
     basketText.innerHTML = "Начнем же ?";
@@ -101,8 +105,8 @@ const ticketPriceAmount = (ticket,numActive,ticketBigCount, summ) => {
 };
 
 // Собрать билет
-const ticketAutofill = (ticketBtn,ticket,tikcetsNum)=> {
-  ticketBtn.onclick = () => {
+const ticketAutofill = (ticketBtnAutoFill, ticket, tikcetsNum) => {
+  ticketBtnAutoFill.onclick = () => {
     let randomArr = [];
     ticket.array = [];
     tikcetsNum.forEach((ticketsNumBtn) => {
@@ -129,23 +133,21 @@ const ticketAutofill = (ticketBtn,ticket,tikcetsNum)=> {
       tikcetsNum[randomArr[i]].click();
     }
   };
-}
+};
 
 // Удалить билет
-
-const ticketRemoveF = (ticketRemove,ticket)=> {
-
-  ticketRemove.addEventListener('click', ()=> {
+const ticketRemoveF = (ticketRemove, ticket) => {
+  ticketRemove.addEventListener("click", () => {
     // console.log(ticket)
-    ticket.remove()
+    ticket.remove();
     let ticketq = document.querySelectorAll(".ticket");
-    ticketq.forEach(tickets => {
-      let counter = tickets.querySelector('.ticket-count')
-      // counter.innerHTML = biletCount-- 
-    })
+    ticketq.forEach((tickets) => {
+      let counter = tickets.querySelector(".ticket-count");
+      // counter.innerHTML = biletCount--
+    });
     // --biletCount
-  })
-}
+  });
+};
 
 // Отрисовка активных цифр
 const outNumber = (array, outTicketNumber) => {
@@ -158,59 +160,49 @@ const outNumber = (array, outTicketNumber) => {
 
 // Проверка на заполненость
 const limitCheck = (numActive, tikcetsNum, ticket) => {
-  let ticketBigCount = parseInt(ticket.dataset.bigStavka)
 
-  if (numActive === limitNumber) {
-    // limitNumber = 10
-
+  if (numActive === limitNumber && limitNumber === 10) {
     tikcetsNum.forEach((all) => {
       if (!all.classList.contains("active")) {
-          // all.setAttribute('disabled','')
+        all.setAttribute("disabled", "");
       }
     });
-    // добовляем атрибут если билет собран
+  }
+  if (numActive === limitNumber) {
     ticket.setAttribute("data-ticket-complete", `true`);
-
-  } 
-  if(numActive > limitNumber) {
-    limitNumber = 10
-    ticket.setAttribute('data-big-stavka','true');
-   
-  } 
-   if( numActive <= 6) {
-    limitNumber = 6
-    ticket.setAttribute('data-big-stavka','false');
-  } 
-   if(numActive < 6) {
-     ticket.setAttribute("data-ticket-complete", "false");
   }
-  if(numActive > 6) {
+  if (numActive > limitNumber) {
+    limitNumber = 10;
+    ticket.setAttribute("data-big-stavka", "true");
+  }
+  if (numActive <= 6) {
+    limitNumber = 6;
+    ticket.setAttribute("data-big-stavka", "false");
+  }
+  if (numActive < 6) {
+    ticket.setAttribute("data-ticket-complete", "false");
+  }
+  if (numActive > 6) {
     ticket.setAttribute("data-big-stavka", `${numActive - 6}`);
-     ticketBigCount = parseInt(ticket.dataset.bigStavka)
-
+    ticketBigCount = parseInt(ticket.dataset.bigStavka);
   }
-   if (numActive !== limitNumber) {
+  if (numActive !== limitNumber) {
     tikcetsNum.forEach((all) => {
       {
         all.removeAttribute("disabled");
       }
     });
-    // ticket.setAttribute("data-ticket-complete", "false");
   }
-  
 };
-
-
 
 ticketGenerate();
 
 // Прогресс лайн
 const progress = (el, numActive) => {
-  let progressLine = el.querySelectorAll(".ticket-progress");
+  let progressLine = el.querySelector(".ticket-progress");
   let progressP = 100 / (limitNumber / numActive);
-  progressLine.forEach((el) => {
-    el.style.width = `${progressP}%`;
-  });
+  progressLine.style.width = `${progressP}%`;
+ 
 };
 
 // добовляем активные цифры в массив
@@ -218,7 +210,7 @@ function numArrayPush(elem, array) {
   let btnValue = elem.innerHTML;
   let index = array.indexOf(btnValue);
   if (elem.classList.contains("active")) {
-    array.push(elem.innerHTML);
+    array.push(btnValue);
   } else {
     array.splice(index, 1);
   }
@@ -228,3 +220,6 @@ function numArrayPush(elem, array) {
 //   if(window.pageYOffset > 200) {
 //     basket.style.cssText = `position: fixed; right: 0`
 //   }}
+for (let i = 0; i < 3; i++) {
+  btnGenerator.click();
+}

@@ -9,6 +9,14 @@ body {
   transition: 500ms;
   background: gold;
 }
+.js-sb {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.filter-tickets {
+  cursor: pointer;
+}
 :root {
   --container-width: 1140px;
 }
@@ -37,6 +45,7 @@ body {
   margin: 0 auto;
 }
 .ticket {
+  position: relative;
   flex-wrap: wrap;
   display: flex;
   padding: 20px;
@@ -167,3 +176,13 @@ body {
 .ticket-remove::after {
   transform: rotate(-45deg);
 }
+.ticket-column {
+  display: grid;
+  grid: auto / repeat(2, 1fr);
+  gap: 20px;
+}
+.ticket-autofill {
+  margin: 0 auto;
+}
+.ticket-column .ticket-numlist {
+  grid: auto / repeat(auto-fit, minmax(41px, 1fr));}
