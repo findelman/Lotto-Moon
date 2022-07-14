@@ -12,9 +12,6 @@ let summ = 0;
 let filterTicket = document.querySelector(".filter-tickets");
 let ticketPrice = 200;
 
-filterTicket.onclick = () => {
-  ticketOutWrapper.classList.toggle("ticket-column");
-};
 // let arrayTicketNumber = [];
 
 btnGenerator.addEventListener("click", () => {
@@ -35,9 +32,9 @@ const ticketGenerate = () => {
       }
     }
   });
-  if (ticket.length === 3) {
-    document.body.style.background = "#ffeb3b";
-  }
+  // if (ticket.length === 3) {
+  //   document.body.style.background = "#ffeb3b";
+  // }
   ticketClick(ticket);
 };
 
@@ -207,12 +204,11 @@ const progress = (el, numActive) => {
 
 // добовляем активные цифры в массив
 function numArrayPush(elem, array) {
-  let btnValue = elem.innerHTML;
-  let index = array.indexOf(btnValue);
+
   if (elem.classList.contains("active")) {
-    array.push(btnValue);
+    array.push(elem.innerHTML);
   } else {
-    array.splice(index, 1);
+    array.splice(array.indexOf(elem.innerHTML), 1);
   }
 }
 
@@ -223,3 +219,8 @@ function numArrayPush(elem, array) {
 for (let i = 0; i < 3; i++) {
   btnGenerator.click();
 }
+
+
+filterTicket.onclick = () => {
+  ticketOutWrapper.classList.toggle("ticket-column");
+};
