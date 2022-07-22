@@ -11,49 +11,52 @@ let basketObj = {};
 let summ = 0;
 let filterTicket = document.querySelector(".filter-tickets");
 let ticketPrice = 200;
-let tickarr = [];
+
 // let arrayTicketNumber = [];
 
 btnGenerator.addEventListener("click", () => {
   ticketGenerate();
-  ticketClick()
 });
 
 // генерация билета
 const ticketGenerate = () => {
   ticketOutWrapper.innerHTML += `<div class="ticket"><div class="ticket-remove"></div><h1 class="ticket-count">${++biletCount} Билет</h1><div class="out-ticket-number"></div><div class="ticket-prgoress-wrapper">
     <div class="ticket-progress"></div>
-</div><div class="ticket-numlist">${generateTicketNumbers()}</div> <button class="ticket-autofill">Собрать билет</button></div>`;
-};
-
-const generateTicketNumbers = () => {
-  let ticketNumbers = ``;
-  for (let i = 1; i <= amountNumber; i++) {
-    ticketNumbers += `<div class="ticket-num">${i}</div>`;
-  }
-  return ticketNumbers;
+</div><div class="ticket-numlist"></div> <button class="ticket-autofill">Собрать билет</button></div>`;
+  let ticketNumList = document.querySelectorAll(".ticket-numlist");
+  let ticket = document.querySelectorAll(".ticket");
+  ticketNumList.forEach((elem) => {
+    if (elem.innerHTML == "") {
+      for (let i = 1; i <= amountNumber; i++) {
+        elem.innerHTML += `<div class="ticket-num">${i}</div>`;
+      }
+    }
+  });
+  // if (ticket.length === 3) {
+  //   document.body.style.background = "#ffeb3b";
+  // }
+  ticketClick(ticket);
 };
 
 // Клики по цифрам внутри определенного билета
-function ticketClick(array) {
-  let ticket = document.querySelectorAll('.ticket')
+function ticketClick(ticket, array) {
   ticket.forEach((ticket, index) => {
     let tikcetsNum = ticket.querySelectorAll(".ticket-num");
     let ticketBtnAutoFill = ticket.querySelector(".ticket-autofill");
     let outTicketNumber = ticket.querySelector(".out-ticket-number");
     let ticketRemove = ticket.querySelector(".ticket-remove");
-    ticket[array] = [];
+    ticket.array = [];
 
     tikcetsNum.forEach((ticketsNumBtn) => {
       ticketsNumBtn.addEventListener("click", () => {
         ticketsNumBtn.classList.toggle("active");
         let numActive = ticket.querySelectorAll(".active").length;
 
-        console.log(ticket[array]);
+        console.log(ticket.array);
         limitCheck(numActive, tikcetsNum, ticket);
         progress(ticket, numActive);
-        numArrayPush(ticketsNumBtn, ticket[array]);
-        outNumber(ticket[array], outTicketNumber);
+        numArrayPush(ticketsNumBtn, ticket.array);
+        outNumber(ticket.array, outTicketNumber);
         ticketPriceAmount(ticket, index);
       });
     });
@@ -73,7 +76,8 @@ const ticketPriceAmount = (ticket, index) => {
     if (ticket.dataset.bigStavka !== "false") {
       basketObj[index] = ticket.dataset.bigStavka * 9 * ticketPrice;
     }
-  } else {
+  } 
+  else {
     delete basketObj[index];
   }
 
@@ -101,7 +105,7 @@ const ticketPriceAmount = (ticket, index) => {
 const ticketAutofill = (ticketBtnAutoFill, ticket, tikcetsNum) => {
   ticketBtnAutoFill.onclick = () => {
     let randomArr = [];
-    ticket = [];
+    ticket.array = [];
     tikcetsNum.forEach((ticketsNumBtn) => {
       if (ticketsNumBtn.classList.contains("active")) {
         ticketsNumBtn.classList.remove("active");
@@ -111,16 +115,19 @@ const ticketAutofill = (ticketBtnAutoFill, ticket, tikcetsNum) => {
       let random = Math.round(Math.random() * (amountNumber - 1));
       let randomDuplicate = randomArr.includes(random);
       if (!randomDuplicate) {
-        tikcetsNum[random].click();
-      } else {
+        randomArr.push(random);
+      } else if (randomDuplicate) {
         while (randomDuplicate) {
           random = Math.round(Math.random() * (amountNumber - 1));
           randomDuplicate = randomArr.includes(random);
           if (!randomDuplicate) {
-            tikcetsNum[random].click();
+            randomArr.push(random);
           }
         }
       }
+    }
+    for (let i = 0; i < limitNumber; i++) {
+      tikcetsNum[randomArr[i]].click();
     }
   };
 };
@@ -150,6 +157,7 @@ const outNumber = (array, outTicketNumber) => {
 
 // Проверка на заполненость
 const limitCheck = (numActive, tikcetsNum, ticket) => {
+
   if (numActive === limitNumber && limitNumber === 10) {
     tikcetsNum.forEach((all) => {
       if (!all.classList.contains("active")) {
@@ -191,10 +199,12 @@ const progress = (el, numActive) => {
   let progressLine = el.querySelector(".ticket-progress");
   let progressP = 100 / (limitNumber / numActive);
   progressLine.style.width = `${progressP}%`;
+ 
 };
 
 // добовляем активные цифры в массив
 function numArrayPush(elem, array) {
+
   if (elem.classList.contains("active")) {
     array.push(elem.innerHTML);
   } else {
@@ -206,9 +216,10 @@ function numArrayPush(elem, array) {
 //   if(window.pageYOffset > 200) {
 //     basket.style.cssText = `position: fixed; right: 0`
 //   }}
-for (let i = 0; i < 2; i++) {
+for (let i = 0; i < 3; i++) {
   btnGenerator.click();
 }
+
 
 filterTicket.onclick = () => {
   ticketOutWrapper.classList.toggle("ticket-column");
