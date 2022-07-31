@@ -18,6 +18,9 @@ let basketObj = {};
 let filterTicket = document.querySelector(".filter-tickets") as HTMLElement;
 let ticketPrice: number = 200;
 // let arrayTicketNumber = [];
+console.log('123 321');
+console.log('321 123');
+
 
 btnGenerator.addEventListener("click", () => {
   ticketGenerate(
@@ -29,7 +32,33 @@ btnGenerator.addEventListener("click", () => {
 });
 
 // Клики по цифрам внутри определенного билета
-  
+function ticketClick() {
+  let ticket = document.querySelectorAll(".ticket");
+  ticket.forEach((ticket, index) => {
+    let tikcetsNum = ticket.querySelectorAll(".ticket-num");
+    let ticketBtnAutoFill = ticket.querySelector(".ticket-autofill");
+    let outTicketNumber = ticket.querySelector(".out-ticket-number");
+    let ticketRemove = ticket.querySelector(".ticket-remove");
+    ticket[index] = [];
+
+    tikcetsNum.forEach((ticketsNumBtn) => {
+      ticketsNumBtn.addEventListener("click", () => {
+        ticketsNumBtn.classList.toggle("active");
+        let numActive = ticket.querySelectorAll(".active").length;
+
+        console.log(ticket[index]);
+        limitCheck(numActive, tikcetsNum, ticket);
+        progress(ticket, numActive);
+        numArrayPush(ticketsNumBtn, ticket[index]);
+        outNumber(ticket[index], outTicketNumber);
+        ticketPriceAmount(ticket, index);
+      });
+    });
+
+    ticketAutofill(ticketBtnAutoFill, ticket, tikcetsNum);
+    ticketRemoveF(ticketRemove, ticket);
+  });
+}
 // Счетчик суммы в баскете
 const ticketPriceAmount = (ticket, index) => {
   let summ: number = 0;

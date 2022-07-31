@@ -3,6 +3,14 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
+  devServer: {
+    static: {
+      directory: path.join(__dirname, './src/index.ts'),
+    },
+    compress: true,
+    port: 9000,
+    
+  },
   entry: {
     main: path.resolve(__dirname, "./src/index.ts"),
   },
