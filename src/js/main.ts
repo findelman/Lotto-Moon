@@ -3,6 +3,7 @@ import ticketGenerate from "./components/create-ticket/ticket-generate";
 import limitCheck from "./components/ticket-logyc/limit-active-number";
 import progress from "./components/ticket-logyc/progress-line";
 import ticketAutofill from "./components/ticket-logyc/ticket-auto-fill";
+import {outNumber, numArrayPush} from "./components/ticket-logyc/ticket-out-number";
 
 let btnGenerator = document.querySelector(".btn-generate") as HTMLElement;
 let ticketOutWrapper = document.querySelector(
@@ -21,7 +22,12 @@ let basketObj = {};
 let filterTicket = document.querySelector(".filter-tickets") as HTMLElement;
 let ticketPrice: number = 200;
 // let arrayTicketNumber = [];
-console.log('123');
+
+let gameConfig = {
+  ticketPrice: 200,
+  limitNumber: 6,
+  amountNumber: 46,  
+}
 
 
 btnGenerator.addEventListener("click", () => {
@@ -116,27 +122,10 @@ const ticketRemoveF = (ticketRemove, ticket) => {
   });
 };
 
-// Отрисовка активных цифр
-const outNumber = (array, outTicketNumber) => {
-  outTicketNumber.innerHTML = ``;
-  array.sort((a, b) => a - b);
-  for (let key of array) {
-    outTicketNumber.innerHTML += `<div class="out-number">${key}</div>`;
-  }
-};
-
-
-
 
 
 // добовляем активные цифры в массив
-function numArrayPush(elem, array) {
-  if (elem.classList.contains("active")) {
-    array.push(elem.innerHTML);
-  } else {
-    array.splice(array.indexOf(elem.innerHTML), 1);
-  }
-}
+
 
 // window.onscroll = ()=> {
 //   if(window.pageYOffset > 200) {
