@@ -1,13 +1,16 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const webpack = require('webpack')
 
 module.exports = {
   devServer: {
     static: {
       directory: path.join(__dirname, './src/index.ts'),
     },
+    open: true,
     compress: true,
+    hot: true,
     port: 9000,
     
   },
@@ -29,12 +32,13 @@ module.exports = {
       filename: "index.html",
     }),
     new CleanWebpackPlugin(),
+    new webpack.HotModuleReplacementPlugin()
   ],
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        use: "ts-loader",
+        use: ["babel-loader", 'ts-loader'],
         exclude: /node_modules/,
       },
       // JavaScript

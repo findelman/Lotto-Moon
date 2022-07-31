@@ -1,5 +1,8 @@
 import generateTicketNumbers from "./components/create-ticket/generate-ticket-numbers";
 import ticketGenerate from "./components/create-ticket/ticket-generate";
+import limitCheck from "./components/ticket-logyc/limit-active-number";
+import progress from "./components/ticket-logyc/progress-line";
+import ticketAutofill from "./components/ticket-logyc/ticket-auto-fill";
 
 let btnGenerator = document.querySelector(".btn-generate") as HTMLElement;
 let ticketOutWrapper = document.querySelector(
@@ -18,14 +21,13 @@ let basketObj = {};
 let filterTicket = document.querySelector(".filter-tickets") as HTMLElement;
 let ticketPrice: number = 200;
 // let arrayTicketNumber = [];
-console.log('123 321');
-console.log('321 123');
+console.log('123');
 
 
 btnGenerator.addEventListener("click", () => {
   ticketGenerate(
     ticketOutWrapper,
-    biletCount,
+    ++biletCount,
     generateTicketNumbers(amountNumber)
   );
   ticketClick();
@@ -47,15 +49,15 @@ function ticketClick() {
         let numActive = ticket.querySelectorAll(".active").length;
 
         console.log(ticket[index]);
-        limitCheck(numActive, tikcetsNum, ticket);
-        progress(ticket, numActive);
+        limitCheck(numActive, tikcetsNum, ticket,limitNumber);
+        progress(ticket, numActive, limitNumber);
         numArrayPush(ticketsNumBtn, ticket[index]);
         outNumber(ticket[index], outTicketNumber);
         ticketPriceAmount(ticket, index);
       });
     });
 
-    ticketAutofill(ticketBtnAutoFill, ticket, tikcetsNum);
+    ticketAutofill(ticketBtnAutoFill, ticket, tikcetsNum,limitNumber,amountNumber);
     ticketRemoveF(ticketRemove, ticket);
   });
 }
@@ -82,7 +84,6 @@ const ticketPriceAmount = (ticket, index) => {
   }
 
   console.log(basketObj);
-  console.log(summ);
 
   basketPrice.textContent = summ.toString();
 
@@ -95,33 +96,6 @@ const ticketPriceAmount = (ticket, index) => {
   }
 };
 
-// Собрать билет
-const ticketAutofill = (ticketBtnAutoFill, ticket, tikcetsNum) => {
-  ticketBtnAutoFill.addEventListener("click", () => {
-    let randomArr = [];
-    ticket = [];
-    tikcetsNum.forEach((ticketsNumBtn) => {
-      if (ticketsNumBtn.classList.contains("active")) {
-        ticketsNumBtn.classList.remove("active");
-      }
-    });
-    for (let i = 0; i < limitNumber; i++) {
-      let random = Math.round(Math.random() * (amountNumber - 1));
-      let randomDuplicate = randomArr.includes(random);
-      if (!randomDuplicate) {
-        tikcetsNum[random].click();
-      } else {
-        while (randomDuplicate) {
-          random = Math.round(Math.random() * (amountNumber - 1));
-          randomDuplicate = randomArr.includes(random);
-          if (!randomDuplicate) {
-            tikcetsNum[random].click();
-          }
-        }
-      }
-    }
-  });
-};
 
 // Удалить билет
 const ticketRemoveF = (ticketRemove, ticket) => {
@@ -151,53 +125,9 @@ const outNumber = (array, outTicketNumber) => {
   }
 };
 
-// Проверка на заполненость
-const limitCheck = (numActive, tikcetsNum, ticket) => {
-  if (numActive === limitNumber && limitNumber === 10) {
-    tikcetsNum.forEach((all) => {
-      if (!all.classList.contains("active")) {
-        all.setAttribute("disabled", "");
-      }
-    });
-  }
-  if (numActive === limitNumber) {
-    ticket.setAttribute("data-ticket-complete", `true`);
-  }
-  if (numActive > limitNumber) {
-    limitNumber = 10;
-    ticket.setAttribute("data-big-stavka", "true");
-  }
-  if (numActive <= 6) {
-    limitNumber = 6;
-    ticket.setAttribute("data-big-stavka", "false");
-  }
-  if (numActive < 6) {
-    ticket.setAttribute("data-ticket-complete", "false");
-  }
-  if (numActive > 6) {
-    ticket.setAttribute("data-big-stavka", `${numActive - 6}`);
-  }
-  if (numActive !== limitNumber) {
-    tikcetsNum.forEach((all) => {
-      {
-        all.removeAttribute("disabled");
-      }
-    });
-  }
-};
 
-ticketGenerate(
-  ticketOutWrapper,
-  biletCount,
-  generateTicketNumbers(amountNumber)
-);
 
-// Прогресс лайн
-const progress = (el, numActive) => {
-  let progressLine = el.querySelector(".ticket-progress");
-  let progressP = 100 / (limitNumber / numActive);
-  progressLine.style.width = `${progressP}%`;
-};
+
 
 // добовляем активные цифры в массив
 function numArrayPush(elem, array) {
@@ -212,7 +142,7 @@ function numArrayPush(elem, array) {
 //   if(window.pageYOffset > 200) {
 //     basket.style.cssText = `position: fixed; right: 0`
 //   }}
-for (let i = 0; i < 2; i++) {
+for (let i = 0; i < 3; i++) {
   btnGenerator.click();
 }
 
