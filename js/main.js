@@ -11,7 +11,6 @@ let basketObj = {};
 let summ = 0;
 let filterTicket = document.querySelector(".filter-tickets");
 let ticketPrice = 200;
-let tickarr = [];
 // let arrayTicketNumber = [];
 
 btnGenerator.addEventListener("click", () => {
@@ -99,7 +98,7 @@ const ticketPriceAmount = (ticket, index) => {
 
 // Собрать билет
 const ticketAutofill = (ticketBtnAutoFill, ticket, tikcetsNum) => {
-  ticketBtnAutoFill.onclick = () => {
+  ticketBtnAutoFill.addEventListener('click', () => {
     let randomArr = [];
     ticket = [];
     tikcetsNum.forEach((ticketsNumBtn) => {
@@ -122,20 +121,28 @@ const ticketAutofill = (ticketBtnAutoFill, ticket, tikcetsNum) => {
         }
       }
     }
-  };
+
+  })
+
+
 };
 
 // Удалить билет
 const ticketRemoveF = (ticketRemove, ticket) => {
+  let tickets = document.querySelectorAll('.ticket')
+
   ticketRemove.addEventListener("click", () => {
-    // console.log(ticket)
     ticket.remove();
+    tickets.forEach((e,index) => {
+       let count = e.querySelector('.ticket-count')
+       count.innerHTML = index++ + ' Билет'
+       console.log();
+      console.log(e);
+    })
     let ticketq = document.querySelectorAll(".ticket");
     ticketq.forEach((tickets) => {
       let counter = tickets.querySelector(".ticket-count");
-      // counter.innerHTML = biletCount--
     });
-    // --biletCount
   });
 };
 
@@ -210,6 +217,6 @@ for (let i = 0; i < 2; i++) {
   btnGenerator.click();
 }
 
-filterTicket.onclick = () => {
+filterTicket.addEventListener('click', ()=> {
   ticketOutWrapper.classList.toggle("ticket-column");
-};
+})
