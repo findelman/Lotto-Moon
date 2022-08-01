@@ -1,13 +1,13 @@
 import { basketSelectors } from "./components/basket/basket-selectors";
 import generateTicketNumbers from "./components/create-ticket/generate-ticket-numbers";
 import ticketGenerate from "./components/create-ticket/ticket-generate";
-import { limitCheck } from "./components/ticket-logyc/limit-active-number";
-import progress from "./components/ticket-logyc/progress-line";
-import ticketAutofill from "./components/ticket-logyc/ticket-auto-fill";
+import { limitCheck } from "./components/ticket-logic/limit-active-number";
+import progress from "./components/ticket-logic/progress-line";
+import ticketAutofill from "./components/ticket-logic/ticket-auto-fill";
 import {
   outNumber,
   numArrayPush,
-} from "./components/ticket-logyc/ticket-out-number";
+} from "./components/ticket-logic/ticket-out-number";
 
 let addTicketBtn = document.querySelector(".btn-generate") as HTMLElement;
 let ticketOutWrapper = document.querySelector(

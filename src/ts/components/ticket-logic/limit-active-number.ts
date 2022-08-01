@@ -17,12 +17,14 @@ export const limitCheck = (numActive, tikcetsNum, ticket, gameConfig) => {
   if (numActive <= 6) {
     ticket.setAttribute("data-big-stavka", "false");
     gameConfig.limitNumber = 6;
+    ticket.style.boxShadow = 'unset'
   }
   if (numActive < 6) {
-    ticket.setAttribute("data-ticket-complete", "false");
+    ticket.setAttribute("data-ticket-complete", "false");    
   }
   if (numActive > 6) {
     ticket.setAttribute("data-big-stavka", `${numActive - 6}`);
+    ticket.style.boxShadow = 'white 0px 0px 20px 4px'
   }
   if (numActive !== gameConfig.limitNumber) {
     tikcetsNum.forEach((all) => {
