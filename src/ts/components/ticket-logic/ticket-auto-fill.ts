@@ -4,9 +4,8 @@ const ticketAutofill = (ticketBtnAutoFill, ticket, tikcetsNum,limitNumber,amount
       ticket['array'] = []
       let randomArr = [];
       tikcetsNum.forEach((ticketsNumBtn) => {
-        if (ticketsNumBtn.classList.contains("ticket-num--active")) {
           ticketsNumBtn.classList.remove("ticket-num--active");
-        }
+          ticketsNumBtn.removeAttribute('disabled')
       });
       for (let i = 0; i < limitNumber; i++) {
         let random = Math.round(Math.random() * (amountNumber - 1));
