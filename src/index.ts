@@ -1,5 +1,3 @@
-// import * as _ from 'lodash';
-
 import './css/style.css'
-
-import './js/main.ts'
+import './css/media.css'
+import './ts/main.ts'

@@ -1,11 +1,11 @@
 // Собрать билет
 const ticketAutofill = (ticketBtnAutoFill, ticket, tikcetsNum,limitNumber,amountNumber) => {
     ticketBtnAutoFill.addEventListener("click", () => {
+      ticket['array'] = []
       let randomArr = [];
-      ticket = [];
       tikcetsNum.forEach((ticketsNumBtn) => {
-        if (ticketsNumBtn.classList.contains("active")) {
-          ticketsNumBtn.classList.remove("active");
+        if (ticketsNumBtn.classList.contains("ticket-num--active")) {
+          ticketsNumBtn.classList.remove("ticket-num--active");
         }
       });
       for (let i = 0; i < limitNumber; i++) {

@@ -18,4 +18,10 @@
     .ticket-numlist {
         grid: auto / repeat(auto-fit, minmax(45px, 1fr));
     }
+    .filter-tickets--hidden {
+        width: 100%;
+    }
+    .ticket-content {
+        padding-bottom: 182px;
+    }
 }

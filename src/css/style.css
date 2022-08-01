@@ -4,11 +4,20 @@
   box-sizing: border-box;
   text-decoration: none;
   list-style: none;
+  scroll-behavior: smooth;
 }
 body {
   transition: 500ms;
-  background: rgb(43 79 200);
+  background: rgb(122 122 122);
+  font-family: system-ui;
 }
+button {
+  outline: unset;
+  border: unset;
+  cursor: pointer;
+}
+
+
 .js-sb {
   display: flex;
   justify-content: space-between;
@@ -35,12 +44,14 @@ body {
   padding-bottom: 30px;
 }
 .btn-generate {
-  padding: 10px 35px;
-  background: blue;
+  padding: 12px 46px;
+  background: #f0f0f0;
   border-radius: 50px;
-  color: white;
+  color: black;
+  font-weight: 600;
   width: fit-content;
   margin: 0 auto;
+  font-size: 17px;
 }
 .ticket {
   position: relative;
@@ -58,6 +69,7 @@ body {
   font-size: 20px;
 }
 .ticket-num {
+  font-size: 17px;
   cursor: pointer;
   border-radius: 8px;
   color: white;
@@ -66,6 +78,7 @@ body {
   place-content: center;
   line-height: 0;
   padding: 50% 0;
+  transition: 300ms;
 }
 .ticket-wrapper {
   /* width: 100%; */
@@ -89,8 +102,8 @@ body {
   transition: 500ms;
   background: gray;
 }
-.active {
-  background: blue;
+.ticket-num--active {
+  background: black;
 }
 .ticket-prgoress-wrapper {
   display: block;
@@ -98,8 +111,10 @@ body {
 }
 .out-ticket-number {
   width: 100%;
+  line-height: 0px;
   gap: 5px;
   display: flex;
+  flex-flow: wrap;
 }
 .out-number {
   height: 30px;
@@ -108,7 +123,7 @@ body {
   place-content: center;
   border-radius: 100%;
   color: white;
-  background: blue;
+  background: black;
   /* animation: outNumbe rOpacity 2s infinite; */
 }
 @keyframes outNumberOpacity {
@@ -179,8 +194,13 @@ body {
   grid: auto / repeat(2, 1fr);
   gap: 20px;
 }
-.ticket-autofill {
+.default-btn {
+  padding: 13px 24px;
+  border-radius: 32px;
   margin: 0 auto;
+  font-size: 15px;
+  margin-top: 10px;
+  font-weight: 700;
 }
 .ticket-column .ticket-numlist {
   grid: auto / repeat(auto-fit, minmax(41px, 1fr));
@@ -233,7 +253,9 @@ body {
   top: 0;
   width: 450px;
   z-index: 10;
-  right: 0;}
+  right: 0;
+  left: 0;
+}
 
 .filter-tickets--hidden h2 {
 

@@ -9,7 +9,7 @@ const outNumber = (array, outTicketNumber) => {
 
 // добовление цифр в массив
   function numArrayPush(elem, array) {
-    if (elem.classList.contains("active")) {
+    if (elem.classList.contains("ticket-num--active")) {
       array.push(elem.innerHTML);
     } else {
       array.splice(array.indexOf(elem.innerHTML), 1);
