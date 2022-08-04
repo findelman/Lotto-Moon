@@ -1,6 +1,7 @@
 import { basketSelectors } from "./components/basket/basket-selectors";
 import generateTicketNumbers from "./components/create-ticket/generate-ticket-numbers";
 import ticketGenerate from "./components/create-ticket/ticket-generate";
+import { swiper } from "./components/swiper";
 import { limitCheck } from "./components/ticket-logic/limit-active-number";
 import progress from "./components/ticket-logic/progress-line";
 import ticketAutofill from "./components/ticket-logic/ticket-auto-fill";
@@ -8,6 +9,9 @@ import {
   outNumber,
   numArrayPush,
 } from "./components/ticket-logic/ticket-out-number";
+
+
+swiper
 
 let addTicketBtn = document.querySelector(".btn-generate") as HTMLElement;
 let ticketOutWrapper = document.querySelector(
@@ -22,11 +26,34 @@ let gameConfig = {
   ticketPrice: 200,
   limitNumber: 6,
   amountNumber: 46,
+  gameName: '6/49',
 };
 
-// document.body.onclick = () => {
 
-// }
+const _gameConfig = (ticketPrice,limitNumber,amountNumber,gameName)=> {
+  gameConfig.ticketPrice = ticketPrice,
+  gameConfig.limitNumber = limitNumber,
+  gameConfig.amountNumber = amountNumber,
+  gameConfig.gameName = gameName;
+}
+let clearTimeout
+let notificationBox = document.querySelector('.notification-box')
+swiper.on('slideChangeTransitionStart', () => {
+  
+  let activeSlide = document.querySelector('.swiper-slide-active') as HTMLElement
+  let splitData = activeSlide.dataset.game.split('/')
+  _gameConfig(100,splitData[0],splitData[splitData.length - 1], splitData.join('/'))
+  console.log(gameConfig.gameName)
+  notificationBox.classList.add('show-f')
+clearInterval(clearTimeout)
+
+   clearTimeout = setTimeout(() => {
+    notificationBox.classList.remove('show-f')
+  }, 3000);
+
+  console.log(splitData)
+})
+
 basketBtn.onclick = () => {
   console.log('123')
 }
@@ -34,7 +61,8 @@ addTicketBtn.addEventListener("click", () => {
   ticketGenerate(
     ticketOutWrapper,
     ++biletCount,
-    generateTicketNumbers(gameConfig.amountNumber)
+    generateTicketNumbers(gameConfig.amountNumber),
+    gameConfig.gameName
   );
   ticketClick();
 
@@ -70,7 +98,7 @@ function ticketClick() {
       ticketBtnAutoFill,
       ticket,
       tikcetsNum,
-      6,
+      gameConfig.limitNumber,
       gameConfig.amountNumber
     );
     ticketRemoveF(ticketRemove, ticket,index);
@@ -92,9 +120,6 @@ const ticketPriceAmount = (ticket, index) => {
 
   if (ticket.dataset.ticketComplete === "true") {
     basketObj[index] = gameConfig.ticketPrice;
-    if (ticket.dataset.bigStavka !== "false") {
-      basketObj[index] = ticket.dataset.bigStavka * 9 * gameConfig.ticketPrice;
-    }
   } else {
     delete basketObj[index];
   }
@@ -150,7 +175,8 @@ for (let i = 0; i < 3; i++) {
   ticketGenerate(
     ticketOutWrapper,
     ++biletCount,
-    generateTicketNumbers(gameConfig.amountNumber)
+    generateTicketNumbers(gameConfig.amountNumber),
+    gameConfig.gameName
   );
   // невероятная оптимизация
   if (i === 2) {

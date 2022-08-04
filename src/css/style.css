@@ -17,7 +17,6 @@ button {
   cursor: pointer;
 }
 
-
 .js-sb {
   display: flex;
   justify-content: space-between;
@@ -55,7 +54,7 @@ button {
 }
 
 .default-btn:active {
-  transform: scale(.95);
+  transform: scale(0.95);
 }
 .ticket {
   position: relative;
@@ -114,6 +113,7 @@ button {
   display: block;
   width: 100%;
 }
+.ticket-gameN { position: absolute; bottom: 0; padding: 20px; font-weight: bolder; font-size: 21px; right: 0; font-style: italic; }
 .out-ticket-number {
   width: 100%;
   line-height: 0px;
@@ -142,22 +142,29 @@ button {
 .flex {
   display: flex;
 }
-.basket {
-  text-align: center;
+.basket-wrapper {
   margin-left: auto;
-  background: white;
   right: 0;
-  padding: 20px;
+  /* padding: 20px; */
   width: 28%;
+}
+.basket {
+  position: relative;
+  text-align: center;
+  background: white;
+  padding: 20px;
   border-radius: 20px;
 }
-[disabled] {
-  opacity: 0.3;
-  pointer-events: none;
+.basket-game {
+  font-size: 30px;
+  font-weight: 900;
 }
-.tickets-content {
-  align-items: flex-start;
-  gap: 30px;
+.basket-games {
+  cursor: grab;
+  margin-bottom: 20px;
+}
+.basket-games:active {
+  cursor: grabbing;
 }
 .basket-btn {
   display: table;
@@ -168,11 +175,16 @@ button {
   visibility: hidden;
   display: none;
 }
-.show {
-  display: block;
-  opacity: 1;
-  visibility: visible;
+
+[disabled] {
+  opacity: 0.3;
+  pointer-events: none;
 }
+.tickets-content {
+  align-items: flex-start;
+  gap: 30px;
+}
+
 .ticket-remove {
   cursor: pointer;
   position: absolute;
@@ -194,10 +206,19 @@ button {
 .ticket-remove::after {
   transform: rotate(-45deg);
 }
-.ticket-column {
+/* .ticket-column {
   display: grid;
   grid: auto / repeat(2, 1fr);
   gap: 20px;
+} */
+.ticket-column {
+  display: flex;
+  gap: 20px;
+  flex-flow: wrap;
+  align-items: flex-start;
+}
+.ticket-column .ticket {
+  width: 48%;
 }
 .default-btn {
   padding: 13px 24px;
@@ -224,14 +245,13 @@ button {
 .filter-tickets {
   position: relative;
   padding: 14px;
+  max-width: 58px;
+  margin: 20px 0 0 auto;
   cursor: pointer;
-
-  /* background: white; */
-  /* border-radius: 100%; */
 }
 .filter-tickets:before {
   position: absolute;
-  content: '';
+  content: "";
   background: white;
   width: 100%;
   border-radius: 100%;
@@ -239,36 +259,80 @@ button {
   height: 100%;
 }
 
-
-.filter-tickets:hover .filter-tickets--hidden {
+.filter-tickets:hover ~ .filter-tickets--hidden,
+.filter-tickets--hidden:hover {
   opacity: 1;
   visibility: visible;
 }
 .filter-tickets--hidden {
-  border-radius: 43px;
+  border-radius: 20px;
   height: fit-content;
   transition: 300ms;
   opacity: 0;
   visibility: hidden;
-  bottom: 0;
-  top: 100%;
   z-index: 2;
   padding: 20px;
   background: white;
-  position: absolute;
-  top: 0;
-  width: 450px;
+  transform: translateY(-64px);
+  width: 100%;
   z-index: 10;
-  right: 0;
-  left: 0;
 }
 
 .filter-tickets--hidden h2 {
-
+  font-size: 19px;
 }
 .filter-tickets__item span {
   display: block;
   width: 2px;
   height: 10px;
   background: black;
+}
+
+/* swiper */
+.swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 200ms linear;
+  opacity: 0.5;
+}
+.swiper-slide-active {
+  transform: scale(1.1) !important;
+  opacity: 1;
+}
+.swiper-slide-prev {
+  transform: scale(0.8) translateX(20px) !important;
+}
+.swiper-slide-next {
+  transform: scale(0.8) translateX(-20px) !important;
+}
+/* убрать */
+:root{--swiper-navigation-size:44px}.swiper-button-next,.swiper-button-prev{position:absolute;top:50%;width:calc(var(--swiper-navigation-size)/ 44 * 27);height:var(--swiper-navigation-size);margin-top:calc(0px - (var(--swiper-navigation-size)/ 2));z-index:10;cursor:pointer;display:flex;align-items:center;justify-content:center;color:black}.swiper-button-next.swiper-button-disabled,.swiper-button-prev.swiper-button-disabled{opacity:.35;cursor:auto;pointer-events:none}.swiper-button-next.swiper-button-hidden,.swiper-button-prev.swiper-button-hidden{opacity:0;cursor:auto;pointer-events:none}.swiper-navigation-disabled .swiper-button-next,.swiper-navigation-disabled .swiper-button-prev{display:none!important}.swiper-button-next:after,.swiper-button-prev:after{font-family:swiper-icons;font-size:20px;font-weight: bolder;text-transform:none!important;letter-spacing:0;font-variant:initial;line-height:1}.swiper-button-prev,.swiper-rtl .swiper-button-next{left:0px;right:auto}.swiper-button-prev:after,.swiper-rtl .swiper-button-next:after{content:'prev'}.swiper-button-next,.swiper-rtl .swiper-button-prev{right:0px;left:auto}.swiper-button-next:after,.swiper-rtl .swiper-button-prev:after{content:'next'}.swiper-button-lock{display:none}
+/* убрать конец */
+
+
+.notification-box {
+background: white;
+display: flex;
+justify-content: center;
+align-items: center;
+border-radius: 20px;
+transition: 300ms linear;
+opacity: 0;
+visibility: hidden;
+position: absolute;
+width: 100%;
+height: 100%;
+top: 0;
+left: 0;
+padding: 0px 20px;
+}
+.show,
+.show-f {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+}
+.show-f {
+  display: flex;
 }
