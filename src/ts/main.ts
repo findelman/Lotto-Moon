@@ -26,7 +26,7 @@ let gameConfig = {
   ticketPrice: 200,
   limitNumber: 6,
   amountNumber: 46,
-  gameName: '6/49',
+  gameName: '6/46',
 };
 
 
