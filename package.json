@@ -7,6 +7,8 @@
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.1",
     "html-webpack-plugin": "^5.5.0",
+    "postcss": "^8.4.16",
+    "sass": "^1.54.3",
     "style-loader": "^3.3.1",
     "ts-loader": "^9.3.1",
     "typescript": "^4.7.4",
@@ -15,8 +17,8 @@
     "webpack-dev-server": "^4.9.3"
   },
   "scripts": {
-    "start": "webpack serve --mode=development",
-    "build": "webpack --mode=production"
+    "start": "cross-env NODE_ENV=development webpack serve",
+    "build": "cross-env NODE_ENV=production webpack"
   },
   "name": "Loto-Moon",
   "version": "1.0.0",
@@ -26,6 +28,11 @@
   "author": "Alisher Zhakupov",
   "license": "MIT",
   "dependencies": {
+    "cross-env": "^7.0.3",
+    "mini-css-extract-plugin": "^2.6.1",
+    "postcss-loader": "^7.0.1",
+    "postcss-preset-env": "^7.7.2",
+    "sass-loader": "^13.0.2",
     "swiper": "^8.3.2"
   }
 }

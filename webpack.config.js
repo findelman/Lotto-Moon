@@ -1,18 +1,26 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const webpack = require('webpack')
+const webpack = require("webpack");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
+let mode = 'development'
+if(process.env.NODE_ENV === 'production') {
+  mode = 'production'
+}
+
+console.log(mode, 'mode')
 module.exports = {
+  mode: mode,
+
   devServer: {
     static: {
-      directory: path.join(__dirname, './src/index.ts'),
+      directory: path.join(__dirname, "./src/index.ts"),
     },
+    hot: true,
     open: true,
     compress: true,
-    hot: true,
     port: 9000,
-    
   },
   entry: {
     main: path.resolve(__dirname, "./src/index.ts"),
@@ -20,7 +28,7 @@ module.exports = {
   // entry: './src/index.ts',
   output: {
     path: path.resolve(__dirname, "./dist"),
-    filename: "[name].bundle.js",
+    filename: "./js/[name][hash].bundle.js",
   },
 
   resolve: {
@@ -32,21 +40,24 @@ module.exports = {
       filename: "index.html",
     }),
     new CleanWebpackPlugin(),
-    new webpack.HotModuleReplacementPlugin()
+    new MiniCssExtractPlugin({
+      filename: "./css/[name][hash].css",
+      chunkFilename: "[id].css",
+    }),
   ],
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        use: ["babel-loader", 'ts-loader'],
+        use: ["babel-loader", "ts-loader"],
         exclude: /node_modules/,
       },
       // JavaScript
-    //   {
-    //     test: /\.js$/,
-    //     exclude: /node_modules/,
-    //     use: ["babel-loader"],
-    //   },
+      //   {
+      //     test: /\.js$/,
+      //     exclude: /node_modules/,
+      //     use: ["babel-loader"],
+      //   },
       // img
       {
         test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
@@ -58,10 +69,30 @@ module.exports = {
         type: "asset/inline",
       },
       //   css
+      // {
+      //   test: /\.css$/i,
+      //   use: ["style-loader", "css-loader"],
+      // },
+
+
+
       {
-        test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
+        test: /\.(sass|scss|css)$/,
+        use: [
+         (mode === 'development') ? 'style-loader' : MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 2,
+              sourceMap: false,
+              modules: false,
+            },
+          },
+          'postcss-loader',
+          'sass-loader',
+        ],
       },
+
     ],
   },
 };

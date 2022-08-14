@@ -1,6 +1,6 @@
 import { basketSelectors } from "./components/basket/basket-selectors";
 import generateTicketNumbers from "./components/create-ticket/generate-ticket-numbers";
-import ticketGenerate from "./components/create-ticket/ticket-generate";
+import {ticketGenerate} from "./components/create-ticket/ticket-generate";
 import { swiper } from "./components/swiper";
 import { limitCheck } from "./components/ticket-logic/limit-active-number";
 import progress from "./components/ticket-logic/progress-line";
