@@ -9,7 +9,6 @@ if(process.env.NODE_ENV === 'production') {
   mode = 'production'
 }
 
-console.log(mode, 'mode')
 module.exports = {
   mode: mode,
 
@@ -27,7 +26,7 @@ module.exports = {
   },
   // entry: './src/index.ts',
   output: {
-    path: path.resolve(__dirname, "./dist"),
+    path: path.resolve(__dirname, "./docs"),
     filename: "./js/[name][hash].bundle.js",
   },
 
