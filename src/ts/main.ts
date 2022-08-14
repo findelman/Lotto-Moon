@@ -11,7 +11,7 @@ import {
 } from "./components/ticket-logic/ticket-out-number";
 
 
-swiper
+swiper.init()
 
 let addTicketBtn = document.querySelector(".btn-generate") as HTMLElement;
 let ticketOutWrapper = document.querySelector(
@@ -69,6 +69,13 @@ addTicketBtn.addEventListener("click", () => {
   let ticket = document.querySelectorAll(".ticket");
   ticket[ticket.length - 1].scrollIntoView();
 });
+
+const ticketOutNumber = () => {
+  let ticket = document.querySelectorAll(".ticket")
+  ticket.forEach(ticket => {
+    
+  })
+}
 
 // Клики по цифрам внутри определенного билета
 function ticketClick() {
