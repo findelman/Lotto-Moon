@@ -80,7 +80,7 @@ const ticketOutNumber = () => {
 // Клики по цифрам внутри определенного билета
 function ticketClick() {
   let ticket = document.querySelectorAll(".ticket");
-  ticket.forEach((ticket, index) => {
+  ticket.forEach((ticket: HTMLElement, index) => {
     let tikcetsNum = ticket.querySelectorAll<HTMLButtonElement>(".ticket-num");
     let ticketBtnAutoFill = ticket.querySelector(".ticket-autofill") as HTMLButtonElement;
     let outTicketNumber = ticket.querySelector(".out-ticket-number") as HTMLElement;
@@ -90,8 +90,11 @@ function ticketClick() {
     tikcetsNum.forEach((ticketsNumBtn) => {
       ticketsNumBtn.addEventListener("click", () => {
         ticketsNumBtn.classList.toggle("ticket-num--active");
+        console.log(ticket.dataset)
         let numActive = ticket.querySelectorAll(".ticket-num--active").length;
-
+        if(String(numActive) === ticket.dataset.limitNumber ) {
+console.log('123')
+        }
         console.log(ticket[index]);
         limitCheck(numActive, tikcetsNum, ticket, gameConfig);
         progress(ticket, numActive, gameConfig.limitNumber);
