@@ -35,8 +35,8 @@
 //   }
 // };
 
-export const limitCheck = (numActive, tikcetsNum, ticket, gameConfig) => {
-  if (numActive === gameConfig.limitNumber) {
+export const limitCheck = (numActive, tikcetsNum, ticket) => {
+  if (numActive === parseInt(ticket.dataset.limitNumber)) {
     ticket.setAttribute("data-ticket-complete", `true`);
     tikcetsNum.forEach((nums) => {
       if (!nums.classList.contains("ticket-num--active")) {
