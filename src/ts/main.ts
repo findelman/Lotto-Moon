@@ -87,8 +87,8 @@ function ticketClick() {
       ticketBtnAutoFill,
       ticket,
       tikcetsNum,
-      gameConfig.limitNumber,
-      gameConfig.amountNumber
+      parseInt(ticket.dataset.limitNumber),
+      tikcetsNum.length
     )
     ticketRemoveF(ticketRemove, ticket, index)
   })
