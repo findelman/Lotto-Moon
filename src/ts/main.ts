@@ -77,7 +77,7 @@ function ticketClick() {
         let numActive = ticket.querySelectorAll('.ticket-num--active').length
 
         limitCheck(numActive, tikcetsNum, ticket )
-        progress(ticket, numActive, gameConfig.limitNumber)
+        progress(ticket, numActive, parseInt(ticket.dataset.limitNumber))
         ticketPriceAmount(ticket, index)
         ticketOutNumber(ticket, outTicketNumber, ticketOut)
       })
