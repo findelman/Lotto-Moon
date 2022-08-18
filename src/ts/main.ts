@@ -22,12 +22,12 @@ let gameConfig = {
   amountNumber: 46,
   gameName: "6/46",
 }
-
-const _gameConfig = (ticketPrice, limitNumber, amountNumber, gameName) => {
-  ;(gameConfig.ticketPrice = ticketPrice),
-    (gameConfig.limitNumber = limitNumber),
-    (gameConfig.amountNumber = amountNumber),
-    (gameConfig.gameName = gameName)
+let { ticketPrice, limitNumber, amountNumber, gameName } = gameConfig
+const _gameConfig = (_ticketPrice, _limitNumber, _amountNumber, _gameName) => {
+  ;(ticketPrice = _ticketPrice),
+    (limitNumber = _limitNumber),
+    (amountNumber = _amountNumber),
+    (gameName = _gameName)
 }
 
 let clearTimeout
@@ -44,18 +44,16 @@ swiper.on("slideChangeTransitionStart", () => {
   }, 3000)
 })
 
-basketBtn.onclick = () => {
-  console.log("123")
-}
+basketBtn.addEventListener("click", () => {})
 
 addTicketBtn.addEventListener("click", () => {
   ticketGenerate(
     ticketOutWrapper,
     ++biletCount,
-    generateTicketNumbers(gameConfig.amountNumber),
-    gameConfig.gameName,
-    gameConfig.limitNumber,
-    gameConfig.ticketPrice
+    generateTicketNumbers(amountNumber),
+    gameName,
+    limitNumber,
+    ticketPrice
   )
   ticketClick()
 
@@ -150,10 +148,10 @@ for (let i = 0; i < 3; i++) {
   ticketGenerate(
     ticketOutWrapper,
     ++biletCount,
-    generateTicketNumbers(gameConfig.amountNumber),
-    gameConfig.gameName,
-    gameConfig.limitNumber,
-    gameConfig.ticketPrice
+    generateTicketNumbers(amountNumber),
+    gameName,
+    limitNumber,
+    ticketPrice
   )
   // невероятная оптимизация
   if (i === 2) {
