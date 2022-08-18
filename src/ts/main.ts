@@ -76,7 +76,7 @@ function ticketClick() {
         ticketsNumBtn.classList.toggle('ticket-num--active')
         let numActive = ticket.querySelectorAll('.ticket-num--active').length
 
-        limitCheck(numActive, tikcetsNum, ticket )
+        limitCheck(numActive, tikcetsNum, ticket)
         progress(ticket, numActive, parseInt(ticket.dataset.limitNumber))
         ticketPriceAmount(ticket, index)
         ticketOutNumber(ticket, outTicketNumber, ticketOut)
@@ -109,7 +109,6 @@ const ticketPriceAmount = (ticket, index) => {
   }
 
   summ = 0
-
   for (let key in basketObj) {
     summ += basketObj[key]
   }
