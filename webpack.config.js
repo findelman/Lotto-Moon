@@ -1,12 +1,12 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const webpack = require("webpack");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const path = require("path")
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+const { CleanWebpackPlugin } = require("clean-webpack-plugin")
+const webpack = require("webpack")
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 
-let mode = 'development'
-if(process.env.NODE_ENV === 'production') {
-  mode = 'production'
+let mode = "development"
+if (process.env.NODE_ENV === "production") {
+  mode = "production"
 }
 
 module.exports = {
@@ -73,25 +73,22 @@ module.exports = {
       //   use: ["style-loader", "css-loader"],
       // },
 
-
-
       {
         test: /\.(sass|scss|css)$/,
         use: [
-         (mode === 'development') ? 'style-loader' : MiniCssExtractPlugin.loader,
+          mode === "development" ? "style-loader" : MiniCssExtractPlugin.loader,
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
               importLoaders: 2,
               sourceMap: false,
               modules: false,
             },
           },
-          'postcss-loader',
-          'sass-loader',
+          "postcss-loader",
+          "sass-loader",
         ],
       },
-
     ],
   },
-};
+}
