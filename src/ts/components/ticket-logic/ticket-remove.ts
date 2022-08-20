@@ -5,7 +5,7 @@ export const ticketRemoveF = (ticketRemove, ticket, index,biletCount,basketObj,b
   let tickets = document.querySelectorAll<HTMLElement>(".ticket")
   ticketRemove.addEventListener("click", () => {
     let summ: number = 0
-    console.log(index, "index")
+    // console.log(index, "index")
     ticket.remove() 
     tickets = document.querySelectorAll(".ticket")
     tickets.forEach((e, index) => {

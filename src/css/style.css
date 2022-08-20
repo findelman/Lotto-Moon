@@ -26,6 +26,7 @@ button {
 }
 
 :root {
+  --default-border-radius: 20px;
   --container-width: 1140px;
 }
 .container {
@@ -67,7 +68,7 @@ button {
   padding: 20px;
   gap: 8px;
   background: white;
-  border-radius: 20px;
+  border-radius: var(--default-border-radius);
   margin-bottom: 20px;
   transition: 300ms;
 }
@@ -157,7 +158,7 @@ button {
   text-align: center;
   background: white;
   padding: 20px;
-  border-radius: 20px;
+  border-radius: var(--default-border-radius);
 }
 .basket-game {
   font-size: 30px;
@@ -269,7 +270,7 @@ button {
   visibility: visible;
 }
 .filter-tickets--hidden {
-  border-radius: 20px;
+  border-radius: var(--default-border-radius);
   height: fit-content;
   transition: 300ms;
   opacity: 0;
@@ -320,7 +321,7 @@ background: white;
 display: flex;
 justify-content: center;
 align-items: center;
-border-radius: 20px;
+border-radius: var(--default-border-radius);
 transition: 300ms linear;
 opacity: 0;
 visibility: hidden;
@@ -334,15 +335,50 @@ padding: 0px 20px;
 
 .game-modal {
   position: fixed;
-  z-index: 3;
-  display: none;
+  z-index: 4;
   left: 0; right: 0; top: 0; bottom: 0; margin: auto;
   width: 80%;
   background: white;
+  padding: 20px;
   height: fit-content;
+  border-radius: var(--default-border-radius);
 }
-
-
+.game-modal-overlay {
+  position: fixed;
+  cursor: pointer;
+  width: 100%;
+  z-index: 3;
+  height: 100%;
+  background: #000000a3;
+  top: 0;
+  left: 0;
+}
+.game-modal__win-numbers {
+justify-content: center;
+}
+.game-modal__win-numbers-item {
+  border-radius: 100%;
+  height: 40px;
+  width: 40px;
+  background: blue;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.win-num {
+  background: green;
+}
+.game-modal-wrapper {
+visibility: hidden;
+opacity: 0;
+}
+.game-modal__out {
+  display: flex;
+  flex-flow: wrap;
+  gap: 20px;
+  margin-top: 20px;
+}
 .show,
 .show-f {
   display: block;

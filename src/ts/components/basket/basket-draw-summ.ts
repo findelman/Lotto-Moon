@@ -5,6 +5,6 @@ export const basketDrawSumm = (basketObj,basketPrice) => {
     for (let key in basketObj) {
       summ += basketObj[key]
     }
-    console.log(basketObj)
+    // console.log(basketObj)
     basketPrice.textContent = `Сумма: ${summ.toString()}`
   }

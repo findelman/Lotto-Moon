@@ -2,12 +2,13 @@ import { basketAddTicket } from "./components/basket/basket-add-ticket"
 import { basketDrawSumm } from "./components/basket/basket-draw-summ"
 import { generateTicketNumbers } from "./components/create-ticket/generate-ticket-numbers"
 import { ticketGenerate } from "./components/create-ticket/ticket-generate"
+import { gameLogic } from "./components/game/game-logic"
 import { swiper } from "./components/swiper"
 import { limitCheck } from "./components/ticket-logic/limit-active-number"
 import { progress } from "./components/ticket-logic/progress-line"
 import { ticketAutofill } from "./components/ticket-logic/ticket-auto-fill"
 import { ticketOutNumber } from "./components/ticket-logic/ticket-out-number"
-import {ticketRemoveF} from "./components/ticket-logic/ticket-remove"
+import { ticketRemoveF } from "./components/ticket-logic/ticket-remove"
 
 swiper.init()
 
@@ -49,17 +50,7 @@ swiper.on("slideChangeTransitionStart", () => {
 })
 
 basketBtn.addEventListener("click", () => {
-  let gameModal = document.querySelector(".game-modal")
-  gameModal.innerHTML = ``
-  for (let key in ticketOut) {
-    gameModal.innerHTML += `${key}`
-    for (let i = 0; i < ticketOut[key].length; i++) {
-      gameModal.innerHTML += `<div class="out-number">${ticketOut[key][i].innerHTML}</div>`
-    }
-    console.log(key)
-  }
-  gameModal.classList.add("show")
-  console.log(ticketOut)
+  gameLogic(ticketOut)
 })
 
 addTicketBtn.addEventListener("click", () => {
@@ -93,20 +84,28 @@ function ticketClick() {
 
         limitCheck(numActive, tikcetsNum, ticket)
         progress(ticket, numActive, parseInt(ticket.dataset.limitNumber))
-        basketAddTicket(ticket, index, basketObj, basketDrawSumm, gameConfig,basketPrice)
+        basketAddTicket(ticket, index, basketObj, basketDrawSumm, gameConfig, basketPrice)
         ticketOutNumber(ticket, outTicketNumber, ticketOut, index)
-        console.log(ticketOut)
+        // console.log(ticketOut)
       })
     })
 
     ticketAutofill(
       ticketBtnAutoFill,
-      ticket,
       tikcetsNum,
       parseInt(ticket.dataset.limitNumber),
       tikcetsNum.length
     )
-    ticketRemoveF(ticketRemove, ticket, index,biletCount,basketObj,basketPrice,ticketOut,basketDrawSumm)
+    ticketRemoveF(
+      ticketRemove,
+      ticket,
+      index,
+      biletCount,
+      basketObj,
+      basketPrice,
+      ticketOut,
+      basketDrawSumm
+    )
   })
 }
 
