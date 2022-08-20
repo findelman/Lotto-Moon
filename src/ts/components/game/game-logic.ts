@@ -4,7 +4,7 @@ let gameModalOverlya = document.querySelector(".game-modal-overlay") as HTMLEmbe
 let gameModalOut = document.querySelector(".game-modal__out")
 let gameModalWinOut = document.querySelector(".game-modal__win-numbers") as HTMLElement
 // Тут нужен полный рефакторинг
-export const gameLogic = (ticketOut) => {
+export const gameLogic = (ticketOut,gameConfig) => {
   gameModalOut.innerHTML = ``
   for (let key in ticketOut) {
     gameModalOut.innerHTML += `<div class="game-item-wrapper">${
@@ -28,7 +28,7 @@ export const gameLogic = (ticketOut) => {
       arr.push(random)
     } else {
       while (randomDuplicate) {
-        random = Math.round(Math.random() * (46 - 1));
+        random = Math.round(Math.random() * (46 + 1));
         randomDuplicate = arr.includes(random);
         if (!randomDuplicate) {
           arr.push(random)
@@ -54,6 +54,13 @@ for(let i = 0; i < arr.length; i++) {
         }
     })
 }
+let gameCount = document.querySelectorAll('.game-item-wrapper')
+gameCount.forEach(item => {
+    let winNumber = item.querySelectorAll('.win-num').length
+    console.log(winNumber)
+    let checkWin = winNumber === 0 ? 'Ничего не выиграли' :  `Совпало ${winNumber} Выигрыш ${gameConfig.ticketPrice * winNumber}`
+    item.innerHTML += checkWin
+})
   gameModalWrapper.classList.add("show")
   console.log(ticketOut, arr)
 }

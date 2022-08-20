@@ -50,7 +50,7 @@ swiper.on("slideChangeTransitionStart", () => {
 })
 
 basketBtn.addEventListener("click", () => {
-  gameLogic(ticketOut)
+  gameLogic(ticketOut,gameConfig)
 })
 
 addTicketBtn.addEventListener("click", () => {
