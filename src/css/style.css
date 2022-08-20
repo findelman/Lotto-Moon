@@ -53,9 +53,11 @@ button {
   width: fit-content;
   margin: 0 auto;
   font-size: 17px;
+  transition: 500ms;
 }
 
-.default-btn:active {
+.default-btn:active,
+.btn-generate:active {
   transform: scale(0.95);
 }
 .ticket {
@@ -329,6 +331,18 @@ top: 0;
 left: 0;
 padding: 0px 20px;
 }
+
+.game-modal {
+  position: fixed;
+  z-index: 3;
+  display: none;
+  left: 0; right: 0; top: 0; bottom: 0; margin: auto;
+  width: 80%;
+  background: white;
+  height: fit-content;
+}
+
+
 .show,
 .show-f {
   display: block;
@@ -338,5 +352,4 @@ padding: 0px 20px;
 .show-f {
   display: flex;
 }
-
 

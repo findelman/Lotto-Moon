@@ -1,5 +1,5 @@
 // генерация цифр в билете
-const generateTicketNumbers = (amountNumber) => {
+export const generateTicketNumbers = (amountNumber) => {
     let ticketNumbers = ``;
     for (let i = 1; i <= amountNumber; i++) {
       ticketNumbers += `<button class="ticket-num">${i}</button>`;
@@ -7,4 +7,3 @@ const generateTicketNumbers = (amountNumber) => {
     return ticketNumbers;
   };
 
-  export default generateTicketNumbers;

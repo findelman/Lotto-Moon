@@ -1,3 +1,21 @@
+
+export const limitCheck = (numActive, tikcetsNum, ticket) => {
+  if (numActive === parseInt(ticket.dataset.limitNumber)) {
+    ticket.setAttribute("data-ticket-complete", `true`);
+    tikcetsNum.forEach((nums) => {
+      if (!nums.classList.contains("ticket-num--active")) {
+        nums.disabled = "true";
+      }
+    });
+  } else {
+    tikcetsNum.forEach((nums) => {
+      nums.removeAttribute("disabled");
+    });
+    ticket.setAttribute("data-ticket-complete", `false`);
+  }
+};
+
+
 // Проверка на заполненость / изначальная функция подразумевала под собой расширенную ставку
 // export const limitCheck = (numActive, tikcetsNum, ticket, gameConfig) => {
 //   if (numActive === gameConfig.limitNumber && gameConfig.limitNumber === 10) {
@@ -34,19 +52,3 @@
 //     });
 //   }
 // };
-
-export const limitCheck = (numActive, tikcetsNum, ticket) => {
-  if (numActive === parseInt(ticket.dataset.limitNumber)) {
-    ticket.setAttribute("data-ticket-complete", `true`);
-    tikcetsNum.forEach((nums) => {
-      if (!nums.classList.contains("ticket-num--active")) {
-        nums.disabled = "true";
-      }
-    });
-  } else {
-    tikcetsNum.forEach((nums) => {
-      nums.removeAttribute("disabled");
-    });
-    ticket.setAttribute("data-ticket-complete", `false`);
-  }
-};

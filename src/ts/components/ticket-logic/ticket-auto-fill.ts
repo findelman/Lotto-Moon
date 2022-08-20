@@ -1,5 +1,5 @@
 // Собрать билет
-const ticketAutofill = (ticketBtnAutoFill, ticket, tikcetsNum,limitNumber,amountNumber) => {
+export const ticketAutofill = (ticketBtnAutoFill, ticket, tikcetsNum,limitNumber,amountNumber) => {
     ticketBtnAutoFill.addEventListener("click", () => {
       ticket['array'] = []
       let randomArr = [];
@@ -28,5 +28,3 @@ const ticketAutofill = (ticketBtnAutoFill, ticket, tikcetsNum,limitNumber,amount
       
     });
   };
-
-  export default ticketAutofill

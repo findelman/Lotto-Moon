@@ -1,20 +1,24 @@
-import generateTicketNumbers from "./components/create-ticket/generate-ticket-numbers"
+import { basketAddTicket } from "./components/basket/basket-add-ticket"
+import { basketDrawSumm } from "./components/basket/basket-draw-summ"
+import { generateTicketNumbers } from "./components/create-ticket/generate-ticket-numbers"
 import { ticketGenerate } from "./components/create-ticket/ticket-generate"
 import { swiper } from "./components/swiper"
 import { limitCheck } from "./components/ticket-logic/limit-active-number"
-import progress from "./components/ticket-logic/progress-line"
-import ticketAutofill from "./components/ticket-logic/ticket-auto-fill"
+import { progress } from "./components/ticket-logic/progress-line"
+import { ticketAutofill } from "./components/ticket-logic/ticket-auto-fill"
 import { ticketOutNumber } from "./components/ticket-logic/ticket-out-number"
+import {ticketRemoveF} from "./components/ticket-logic/ticket-remove"
 
 swiper.init()
 
 let addTicketBtn = document.querySelector(".btn-generate") as HTMLElement
 let ticketOutWrapper = document.querySelector(".tickets-out-wrapper") as HTMLElement
 let biletCount: number = 0
-let basketObj: { index?: string; ticketPrice?: number } = {}
-let ticketOut = {}
 let filterTicket = document.querySelector(".filter-tickets") as HTMLElement
+let ticketOut = {}
+let basketObj: { index?: string; ticketPrice?: number } = {}
 let basketBtn = document.querySelector(".basket-btn") as HTMLElement
+let basketPrice = document.querySelector(".basket-ticket-price") as HTMLElement
 
 let gameConfig = {
   ticketPrice: 200,
@@ -44,7 +48,19 @@ swiper.on("slideChangeTransitionStart", () => {
   }, 3000)
 })
 
-basketBtn.addEventListener("click", () => {})
+basketBtn.addEventListener("click", () => {
+  let gameModal = document.querySelector(".game-modal")
+  gameModal.innerHTML = ``
+  for (let key in ticketOut) {
+    gameModal.innerHTML += `${key}`
+    for (let i = 0; i < ticketOut[key].length; i++) {
+      gameModal.innerHTML += `<div class="out-number">${ticketOut[key][i].innerHTML}</div>`
+    }
+    console.log(key)
+  }
+  gameModal.classList.add("show")
+  console.log(ticketOut)
+})
 
 addTicketBtn.addEventListener("click", () => {
   ticketGenerate(
@@ -77,8 +93,9 @@ function ticketClick() {
 
         limitCheck(numActive, tikcetsNum, ticket)
         progress(ticket, numActive, parseInt(ticket.dataset.limitNumber))
-        ticketPriceAmount(ticket, index)
-        ticketOutNumber(ticket, outTicketNumber, ticketOut)
+        basketAddTicket(ticket, index, basketObj, basketDrawSumm, gameConfig,basketPrice)
+        ticketOutNumber(ticket, outTicketNumber, ticketOut, index)
+        console.log(ticketOut)
       })
     })
 
@@ -89,58 +106,7 @@ function ticketClick() {
       parseInt(ticket.dataset.limitNumber),
       tikcetsNum.length
     )
-    ticketRemoveF(ticketRemove, ticket, index)
-  })
-}
-
-let basketText = document.querySelector(".basket-text") as HTMLElement
-let basketContent = document.querySelector(".basket-hidden-content") as HTMLElement
-let basketPrice = document.querySelector(".basket-ticket-price") as HTMLElement
-// Счетчик суммы в баскете
-const ticketPriceAmount = (ticket, index) => {
-  let summ: number = 0
-  let ticketComplete = document.querySelectorAll('.ticket[data-ticket-complete="true"]').length
-
-  if (ticket.dataset.ticketComplete === "true") {
-    basketObj[index] = gameConfig.ticketPrice
-  } else {
-    delete basketObj[index]
-  }
-
-  summ = 0
-  for (let key in basketObj) {
-    summ += basketObj[key]
-  }
-
-  console.log(basketObj)
-
-  basketPrice.textContent = `Сумма: ${summ.toString()}`
-
-  if (ticketComplete >= 1) {
-    basketText.innerHTML = "Начнем же ?"
-    basketContent.classList.add("show")
-  } else {
-    basketText.innerHTML = "Чтобы начать игру соберите хотя бы 1 билет"
-    basketContent.classList.remove("show")
-  }
-}
-
-// Удалить билет
-const ticketRemoveF = (ticketRemove, ticket, index) => {
-  let tickets = document.querySelectorAll<HTMLElement>(".ticket")
-  ticketRemove.addEventListener("click", () => {
-    ticket.remove()
-    console.log(index, "index")
-    delete basketObj[index]
-    console.log(basketObj)
-    ticketPriceAmount(ticket, index)
-    tickets = document.querySelectorAll(".ticket")
-    tickets.forEach((e, index) => {
-      let count = e.querySelector(".ticket-count")
-      count.innerHTML = ++index + " Билет"
-      biletCount = index
-    })
-    delete ticketOut[ticket.querySelector(".ticket-count").innerHTML]
+    ticketRemoveF(ticketRemove, ticket, index,biletCount,basketObj,basketPrice,ticketOut,basketDrawSumm)
   })
 }
 
