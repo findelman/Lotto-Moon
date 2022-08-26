@@ -1,6 +1,5 @@
 // Добавление активных цифрв в объект
 export const ticketOutNumber = (ticket, outTicketNumber,ticketOut,index) => {
-  let ticketCount = ticket.querySelector(".ticket-count").innerHTML;
   ticketOut[index] = ticket.querySelectorAll(".ticket-num--active");
   
   outNumber(ticketOut[index], outTicketNumber);

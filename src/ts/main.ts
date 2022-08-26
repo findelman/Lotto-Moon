@@ -36,7 +36,7 @@ const _gameConfig = (_ticketPrice, _limitNumber, _amountNumber, _gameName) => {
     (gameName = _gameName)
 }
 
-
+// Меняем конфигурацию при смене лотереи
 swiper.on("slideChangeTransitionStart", () => {
   let activeSlide = document.querySelector(".swiper-slide-active") as HTMLElement
   let [digitLimit, totalDigits] = activeSlide.dataset.game.split("/")
@@ -59,6 +59,7 @@ addTicketBtn.addEventListener("click", () => {
   )
   ticketClick()
 
+  // свайп к последнему слайду
   let ticket = document.querySelectorAll(".ticket")
   ticket[ticket.length - 1].scrollIntoView()
 })
@@ -81,16 +82,15 @@ function ticketClick() {
         progress(ticket, numActive, parseInt(ticket.dataset.limitNumber))
         basketAddTicket(ticket, index, basketObj, basketDrawSumm,  basketPrice)
         ticketOutNumber(ticket, outTicketNumber, ticketOut, index)
-        // console.log(ticketOut)
       })
     })
 
     ticketAutofill(
       ticketBtnAutoFill,
       tikcetsNum,
-      parseInt(ticket.dataset.limitNumber),
-      tikcetsNum.length
+      ticket
     )
+    console.log(limitNumber)
     ticketRemoveF(ticketRemove, ticket, index, basketObj, basketPrice, ticketOut, basketDrawSumm)
   })
 }
