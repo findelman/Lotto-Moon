@@ -3,6 +3,7 @@ import { basketDrawSumm } from "./components/basket/basket-draw-summ"
 import { generateTicketNumbers } from "./components/create-ticket/generate-ticket-numbers"
 import { ticketGenerate } from "./components/create-ticket/ticket-generate"
 import { gameLogic } from "./components/game/game-logic"
+import { notificationBoxShow } from "./components/notification/notifitcation-box-show"
 import { swiper } from "./components/swiper"
 import { limitCheck } from "./components/ticket-logic/limit-active-number"
 import { progress } from "./components/ticket-logic/progress-line"
@@ -11,6 +12,7 @@ import { ticketOutNumber } from "./components/ticket-logic/ticket-out-number"
 import { ticketRemoveF } from "./components/ticket-logic/ticket-remove"
 
 swiper.init()
+let notificationBox = notificationBoxShow()
 
 let addTicketBtn = document.querySelector(".btn-generate") as HTMLElement
 let ticketOutWrapper = document.querySelector(".tickets-out-wrapper") as HTMLElement
@@ -19,7 +21,6 @@ let ticketOut = {}
 let basketObj: { index?: string; ticketPrice?: number } = {}
 let basketBtn = document.querySelector(".basket-btn") as HTMLElement
 let basketPrice = document.querySelector(".basket-ticket-price") as HTMLElement
-
 
 let gameConfig = {
   ticketPrice: 200,
@@ -35,22 +36,17 @@ const _gameConfig = (_ticketPrice, _limitNumber, _amountNumber, _gameName) => {
     (gameName = _gameName)
 }
 
-let clearTimeout
-let notificationBox = document.querySelector(".notification-box")
+
 swiper.on("slideChangeTransitionStart", () => {
   let activeSlide = document.querySelector(".swiper-slide-active") as HTMLElement
   let [digitLimit, totalDigits] = activeSlide.dataset.game.split("/")
   _gameConfig(100, digitLimit, totalDigits, activeSlide.dataset.game)
 
-  notificationBox.classList.add("show-f")
-  clearInterval(clearTimeout)
-  clearTimeout = setTimeout(() => {
-    notificationBox.classList.remove("show-f")
-  }, 3000)
+  notificationBox()
 })
 
 basketBtn.addEventListener("click", () => {
-  gameLogic(ticketOut,gameConfig)
+  gameLogic(ticketOut, gameConfig)
 })
 
 addTicketBtn.addEventListener("click", () => {
@@ -95,20 +91,11 @@ function ticketClick() {
       parseInt(ticket.dataset.limitNumber),
       tikcetsNum.length
     )
-    ticketRemoveF(
-      ticketRemove,
-      ticket,
-      index,
-      basketObj,
-      basketPrice,
-      ticketOut,
-      basketDrawSumm
-    )
+    ticketRemoveF(ticketRemove, ticket, index, basketObj, basketPrice, ticketOut, basketDrawSumm)
   })
 }
 
 for (let i = 0; i < 3; i++) {
-
   ticketGenerate(
     ticketOutWrapper,
     generateTicketNumbers(amountNumber),
