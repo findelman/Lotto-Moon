@@ -40,7 +40,7 @@ const _gameConfig = (_ticketPrice, _limitNumber, _amountNumber, _gameName) => {
 swiper.on("slideChangeTransitionStart", () => {
   let activeSlide = document.querySelector(".swiper-slide-active") as HTMLElement
   let [digitLimit, totalDigits] = activeSlide.dataset.game.split("/")
-  _gameConfig(100, digitLimit, totalDigits, activeSlide.dataset.game)
+  _gameConfig(activeSlide.dataset.price, digitLimit, totalDigits, activeSlide.dataset.game)
 
   notificationBox()
 })
@@ -79,7 +79,7 @@ function ticketClick() {
 
         limitCheck(numActive, tikcetsNum, ticket)
         progress(ticket, numActive, parseInt(ticket.dataset.limitNumber))
-        basketAddTicket(ticket, index, basketObj, basketDrawSumm, gameConfig, basketPrice)
+        basketAddTicket(ticket, index, basketObj, basketDrawSumm,  basketPrice)
         ticketOutNumber(ticket, outTicketNumber, ticketOut, index)
         // console.log(ticketOut)
       })

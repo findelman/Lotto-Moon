@@ -5,12 +5,11 @@ export const basketAddTicket = (
   ticket,
   index,
   basketObj,
-  basketDrawSumm,
-  gameConfig,
+  basketDrawSumm,  
   basketPrice
 ) => {
   if (ticket.dataset.ticketComplete === "true") {
-    basketObj[index] = gameConfig.ticketPrice
+    basketObj[index] = parseInt(ticket.dataset.ticketPrice)
   } else {
     delete basketObj[index]
   }
