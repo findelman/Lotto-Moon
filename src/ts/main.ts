@@ -14,12 +14,12 @@ swiper.init()
 
 let addTicketBtn = document.querySelector(".btn-generate") as HTMLElement
 let ticketOutWrapper = document.querySelector(".tickets-out-wrapper") as HTMLElement
-let biletCount: number = 0
 let filterTicket = document.querySelector(".filter-tickets") as HTMLElement
 let ticketOut = {}
 let basketObj: { index?: string; ticketPrice?: number } = {}
 let basketBtn = document.querySelector(".basket-btn") as HTMLElement
 let basketPrice = document.querySelector(".basket-ticket-price") as HTMLElement
+
 
 let gameConfig = {
   ticketPrice: 200,
@@ -56,7 +56,6 @@ basketBtn.addEventListener("click", () => {
 addTicketBtn.addEventListener("click", () => {
   ticketGenerate(
     ticketOutWrapper,
-    ++biletCount,
     generateTicketNumbers(amountNumber),
     gameName,
     limitNumber,
@@ -100,7 +99,6 @@ function ticketClick() {
       ticketRemove,
       ticket,
       index,
-      biletCount,
       basketObj,
       basketPrice,
       ticketOut,
@@ -110,9 +108,9 @@ function ticketClick() {
 }
 
 for (let i = 0; i < 3; i++) {
+
   ticketGenerate(
     ticketOutWrapper,
-    ++biletCount,
     generateTicketNumbers(amountNumber),
     gameName,
     limitNumber,
