@@ -6,7 +6,7 @@ import { gameLogic } from "./components/game/game-logic"
 import { notificationBoxShow } from "./components/notification/notifitcation-box-show"
 import { swiper } from "./components/swiper"
 import { limitCheck } from "./components/ticket-logic/limit-active-number"
-import { progress } from "./components/ticket-logic/progress-line"
+import { progressLine } from "./components/ticket-logic/progress-line"
 import { ticketAutofill } from "./components/ticket-logic/ticket-auto-fill"
 import { ticketOutNumber } from "./components/ticket-logic/ticket-out-number"
 import { ticketRemoveF } from "./components/ticket-logic/ticket-remove"
@@ -79,7 +79,7 @@ function ticketClick() {
         let numActive = ticket.querySelectorAll(".ticket-num--active").length
 
         limitCheck(numActive, tikcetsNum, ticket)
-        progress(ticket, numActive, parseInt(ticket.dataset.limitNumber))
+        progressLine(ticket, numActive, parseInt(ticket.dataset.limitNumber))
         basketAddTicket(ticket, index, basketObj, basketDrawSumm,  basketPrice)
         ticketOutNumber(ticket, outTicketNumber, ticketOut, index)
       })

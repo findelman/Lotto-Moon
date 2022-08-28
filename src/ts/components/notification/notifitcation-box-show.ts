@@ -1,8 +1,8 @@
 // Показ текста при смене лотереи
 export const notificationBoxShow = () => {
     let clearTimeout
+    let notificationBox = document.querySelector(".notification-box")
     return function () {
-      let notificationBox = document.querySelector(".notification-box")
       notificationBox.classList.add("show-f")
       clearInterval(clearTimeout)
       clearTimeout = setTimeout(() => {

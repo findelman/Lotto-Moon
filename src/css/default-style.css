@@ -1,0 +1,35 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+  scroll-behavior: smooth;
+}
+body {
+  transition: 500ms;
+  background: rgb(122 122 122);
+  font-family: system-ui;
+}
+button {
+  outline: unset;
+  border: unset;
+  cursor: pointer;
+}
+.js-sb {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.flex {
+  display: flex;
+}
+.show,
+.show-f {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+}
+.show-f {
+  display: flex;
+}
