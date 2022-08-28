@@ -1,4 +1,5 @@
 :root {
     --default-border-radius: 20px;
     --container-width: 1140px;
+    --default-transition: 300ms;
   }
