@@ -97,6 +97,7 @@
   display: flex;
   flex-flow: wrap;
 }
+.game-number,
 .out-number {
   height: 30px;
   width: 30px;
@@ -324,6 +325,8 @@ padding: 0px 20px;
 }
 .game-modal__win-numbers {
 justify-content: center;
+gap: 4px;
+margin-top: 5px;
 }
 .game-modal__win-numbers-item {
   border-radius: 100%;
@@ -334,6 +337,9 @@ justify-content: center;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.game-item-balls {
+  gap: 2px;
 }
 .win-num {
   background: green;
