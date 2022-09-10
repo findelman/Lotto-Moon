@@ -19,9 +19,17 @@
         grid: auto / repeat(auto-fit, minmax(45px, 1fr));
     }
     .filter-tickets--hidden {
-        width: 100%;
+        /* width: 100%; */
+        display: none;
     }
     .ticket-content {
         padding-bottom: 182px;
+    }
+    .basket-wrapper {
+        width: 100%;
+    }
+    .filter-tickets
+     {
+        display: none;
     }
 }

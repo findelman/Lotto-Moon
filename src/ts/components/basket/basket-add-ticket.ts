@@ -1,18 +1,21 @@
 import { basketCheckComplete } from "./basket-check-ticket-complete"
+import { basketDrawSumm } from "./basket-draw-summ"
 
 // Счетчик суммы в баскете
-export const basketAddTicket = (
-  ticket,
-  index,
-  basketObj,
-  basketDrawSumm,  
-  basketPrice
-) => {
-  if (ticket.dataset.ticketComplete === "true") {
-    basketObj[index] = parseInt(ticket.dataset.ticketPrice)
-  } else {
-    delete basketObj[index]
-  }
+export const basketAddTicket = (basketObj, basketPrice) => {
+  let all = document.querySelectorAll(".ticket")
+  all.forEach((e: HTMLElement, index) => {
+    basketObj.delete(index)
+    if (e.dataset.ticketComplete === "true") {
+      basketObj.set(index, parseInt(e.dataset.ticketPrice))
+    }
+    if (!e.dataset.ticketComplete) {
+      basketObj.delete(index)
+    }
+  })
+
+  console.log(basketObj)
+
   basketCheckComplete()
   basketDrawSumm(basketObj, basketPrice)
 }

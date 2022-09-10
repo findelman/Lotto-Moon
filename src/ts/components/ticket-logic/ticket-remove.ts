@@ -1,7 +1,8 @@
-import { basketCheckComplete } from "../basket/basket-check-ticket-complete"
+import { basketAddTicket } from "../basket/basket-add-ticket"
+import { basketDrawSumm } from "../basket/basket-draw-summ"
 
 // Удалить билет
-export const ticketRemoveF = (ticketRemove, ticket, index,basketObj,basketPrice,ticketOut,basketDrawSumm) => {
+export const ticketRemoveF = (ticketRemove, ticket, index,ticketOut,basketObj,basketPrice) => {
   let tickets = document.querySelectorAll<HTMLElement>(".ticket")
   ticketRemove.addEventListener("click", () => {
     ticket.remove() 
@@ -10,9 +11,7 @@ export const ticketRemoveF = (ticketRemove, ticket, index,basketObj,basketPrice,
       let count = e.querySelector(".ticket-count")
       count.innerHTML = ++index + " Билет"
     })
-    delete basketObj[index]
     delete ticketOut[index]
-    basketDrawSumm(basketObj,basketPrice)
-    basketCheckComplete()
+    console.log(index)
   })
 }

@@ -18,7 +18,8 @@ let addTicketBtn = document.querySelector(".btn-generate") as HTMLElement
 let ticketOutWrapper = document.querySelector(".tickets-out-wrapper") as HTMLElement
 let filterTicket = document.querySelector(".filter-tickets") as HTMLElement
 let ticketOut = {}
-let basketObj: { index?: string; ticketPrice?: number } = {}
+// let basketObj: { index?: string; ticketPrice?: number } = {}
+let newBasket = new Map()
 let basketBtn = document.querySelector(".basket-btn") as HTMLElement
 let basketPrice = document.querySelector(".basket-ticket-price") as HTMLElement
 
@@ -64,6 +65,9 @@ addTicketBtn.addEventListener("click", () => {
   ticket[ticket.length - 1].scrollIntoView()
 })
 
+// TEST
+
+// TEST END
 // Клики по цифрам внутри определенного билета
 function ticketClick() {
   let ticket = document.querySelectorAll(".ticket")
@@ -80,7 +84,7 @@ function ticketClick() {
 
         limitCheck(numActive, tikcetsNum, ticket)
         progressLine(ticket, numActive, parseInt(ticket.dataset.limitNumber))
-        basketAddTicket(ticket, index, basketObj, basketDrawSumm,  basketPrice)
+        basketAddTicket(newBasket,  basketPrice)
         ticketOutNumber(ticket, outTicketNumber, ticketOut, index)
       })
     })
@@ -90,10 +94,24 @@ function ticketClick() {
       tikcetsNum,
       ticket
     )
-    console.log(limitNumber)
-    ticketRemoveF(ticketRemove, ticket, index, basketObj, basketPrice, ticketOut, basketDrawSumm)
+    ticketRemoveF(ticketRemove, ticket, index, ticketOut,newBasket,basketPrice)
   })
 }
+let observerDeleteTicket = new MutationObserver(mutationRecords => {
+    basketAddTicket(newBasket,   basketPrice)
+    let summ: number = 0
+    summ = 0
+    newBasket.forEach((value) => {
+      summ += value
+    })
+  
+    basketPrice.textContent = `Сумма: ${summ.toString()}`
+});
+
+// Наблюдаем за удалением
+observerDeleteTicket.observe(ticketOutWrapper, {
+  childList: true,  
+});
 
 for (let i = 0; i < 3; i++) {
   ticketGenerate(
