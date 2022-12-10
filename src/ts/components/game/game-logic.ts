@@ -2,11 +2,11 @@ import { ticketOutBalls } from "./ticket-out-balls"
 import { gameNumbers } from "./game-numbers"
 import { winCount } from "./win-count"
 
-let gameModalWrapper = document.querySelector(".game-modal-wrapper") as HTMLEmbedElement
-let gameModal = document.querySelector(".game-modal") as HTMLEmbedElement
-let gameModalOverlya = document.querySelector(".game-modal-overlay") as HTMLEmbedElement
-let gameModalOut = document.querySelector(".game-modal__out")
-let gameModalWinOut = document.querySelector(".game-modal__win-numbers") as HTMLElement
+const gameModalWrapper = document.querySelector(".game-modal-wrapper") as HTMLEmbedElement
+const gameModal = document.querySelector(".game-modal") as HTMLEmbedElement
+const gameModalOverlya = document.querySelector(".game-modal-overlay") as HTMLEmbedElement
+const gameModalOut = document.querySelector(".game-modal__out")
+const gameModalWinOut = document.querySelector(".game-modal__win-numbers") as HTMLElement
 // Тут нужен полный рефакторинг
 export const gameLogic = (ticketOut, gameConfig) => {
   gameModalOut.innerHTML = ``

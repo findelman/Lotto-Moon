@@ -12,18 +12,18 @@ import { ticketOutNumber } from "./components/ticket-logic/ticket-out-number"
 import { ticketRemoveF } from "./components/ticket-logic/ticket-remove"
 
 swiper.init()
-let notificationBox = notificationBoxShow()
+const notificationBox = notificationBoxShow()
 
-let addTicketBtn = document.querySelector(".btn-generate") as HTMLElement
-let ticketOutWrapper = document.querySelector(".tickets-out-wrapper") as HTMLElement
-let filterTicket = document.querySelector(".filter-tickets") as HTMLElement
-let ticketOut = {}
-// let basketObj: { index?: string; ticketPrice?: number } = {}
-let newBasket = new Map()
-let basketBtn = document.querySelector(".basket-btn") as HTMLElement
-let basketPrice = document.querySelector(".basket-ticket-price") as HTMLElement
+const addTicketBtn = document.querySelector(".btn-generate") as HTMLElement
+const ticketOutWrapper = document.querySelector(".tickets-out-wrapper") as HTMLElement
+const filterTicket = document.querySelector(".filter-tickets") as HTMLElement
+const ticketOut = {}
+// const basketObj: { index?: string; ticketPrice?: number } = {}
+const newBasket = new Map()
+const basketBtn = document.querySelector(".basket-btn") as HTMLElement
+const basketPrice = document.querySelector(".basket-ticket-price") as HTMLElement
 
-let gameConfig = {
+const gameConfig = {
   ticketPrice: 200,
   limitNumber: 6,
   amountNumber: 46,
@@ -39,7 +39,7 @@ const _gameConfig = (_ticketPrice, _limitNumber, _amountNumber, _gameName) => {
 
 // Меняем конфигурацию при смене лотереи
 swiper.on("slideChangeTransitionStart", () => {
-  let activeSlide = document.querySelector(".swiper-slide-active") as HTMLElement
+  const activeSlide = document.querySelector(".swiper-slide-active") as HTMLElement
   let [digitLimit, totalDigits] = activeSlide.dataset.game.split("/")
   _gameConfig(activeSlide.dataset.price, digitLimit, totalDigits, activeSlide.dataset.game)
 
@@ -70,17 +70,17 @@ addTicketBtn.addEventListener("click", () => {
 // TEST END
 // Клики по цифрам внутри определенного билета
 function ticketClick() {
-  let ticket = document.querySelectorAll(".ticket")
+  const ticket = document.querySelectorAll(".ticket")
   ticket.forEach((ticket: HTMLElement, index) => {
-    let tikcetsNum = ticket.querySelectorAll<HTMLButtonElement>(".ticket-num")
-    let ticketBtnAutoFill = ticket.querySelector(".ticket-autofill") as HTMLButtonElement
-    let outTicketNumber = ticket.querySelector(".out-ticket-number") as HTMLElement
-    let ticketRemove = ticket.querySelector(".ticket-remove") as HTMLElement
+    const tikcetsNum = ticket.querySelectorAll<HTMLButtonElement>(".ticket-num")
+    const ticketBtnAutoFill = ticket.querySelector(".ticket-autofill") as HTMLButtonElement
+    const outTicketNumber = ticket.querySelector(".out-ticket-number") as HTMLElement
+    const ticketRemove = ticket.querySelector(".ticket-remove") as HTMLElement
 
     tikcetsNum.forEach((ticketsNumBtn) => {
       ticketsNumBtn.addEventListener("click", () => {
         ticketsNumBtn.classList.toggle("ticket-num--active")
-        let numActive = ticket.querySelectorAll(".ticket-num--active").length
+        const numActive = ticket.querySelectorAll(".ticket-num--active").length
 
         limitCheck(numActive, tikcetsNum, ticket)
         progressLine(ticket, numActive, parseInt(ticket.dataset.limitNumber))
@@ -97,7 +97,7 @@ function ticketClick() {
     ticketRemoveF(ticketRemove, ticket, index, ticketOut,newBasket,basketPrice)
   })
 }
-let observerDeleteTicket = new MutationObserver(mutationRecords => {
+const observerDeleteTicket = new MutationObserver(mutationRecords => {
     basketAddTicket(newBasket,   basketPrice)
     let summ: number = 0
     summ = 0
