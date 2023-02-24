@@ -1,6 +1,6 @@
 # Loto-Moon
 
-open: https://findelman.github.io/Loto-Moon/
+open: https://findelman.github.io/Lotto-Moon/
 
 yarn install
 
