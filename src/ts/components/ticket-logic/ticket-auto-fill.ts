@@ -1,5 +1,7 @@
 // Собрать билет
-export const ticketAutofill = (ticketBtnAutoFill, tikcetsNum, ticket) => {
+export const ticketAutofill = (tikcetsNum, ticket) => {
+  const ticketBtnAutoFill = ticket.querySelector(".ticket-autofill") as HTMLButtonElement
+
   ticketBtnAutoFill.addEventListener("click", () => {
     let randomArr = Array(tikcetsNum.length)
       .fill(0)

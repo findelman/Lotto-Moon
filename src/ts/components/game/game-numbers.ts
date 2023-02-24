@@ -1,5 +1,8 @@
-export const gameNumbers = (gameModalWinOut, gameModal) => {
-  let arr = []
+const gameModal = document.querySelector(".game-modal") as HTMLEmbedElement
+const gameModalWinOut = document.querySelector(".game-modal__win-numbers") as HTMLElement
+
+export const gameNumbers = () => {
+  const arr = []
 
   gameModalWinOut.innerHTML = ``
   winNumbersGenerate(arr)
@@ -11,26 +14,17 @@ export const gameNumbers = (gameModalWinOut, gameModal) => {
 }
 
 function winNumbersGenerate(arr) {
-  for (let i = 0; i < 6; i++) {
-    let random = Math.round(Math.random() * (46 + 1))
-    let randomDuplicate = arr.includes(random)
-    if (!randomDuplicate) {
+  while (arr.length < 6) {
+    const random = Math.round(Math.random() * 46 + 1)
+    if (!arr.includes(random)) {
       arr.push(random)
-    } else {
-      while (randomDuplicate) {
-        random = Math.round(Math.random() * (46 + 1))
-        randomDuplicate = arr.includes(random)
-        if (!randomDuplicate) {
-          arr.push(random)
-        }
-      }
     }
     arr.sort((a, b) => a - b)
   }
 }
 
 function gameNumbersRender(gameModal, arr) {
-  let gameNumbers = gameModal.querySelectorAll(".game-number")
+  const gameNumbers = gameModal.querySelectorAll(".game-number")
 
   for (let i = 0; i < arr.length; i++) {
     gameNumbers.forEach((e) => {
