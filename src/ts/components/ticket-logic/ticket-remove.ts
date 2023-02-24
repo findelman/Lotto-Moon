@@ -10,8 +10,8 @@ export const ticketRemoveF = (ticket, index, ticketOut) => {
       let count = e.querySelector(".ticket-count")
       count.innerHTML = ++index + " Билет"
     })
-    
+
     delete ticketOut[index]
-    console.log(index)
+    console.log(index,ticketOut)
   })
 }

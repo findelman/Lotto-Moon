@@ -23,7 +23,7 @@ const newBasket = new Map()
 const basketBtn = document.querySelector(".basket-btn") as HTMLElement
 const basketPrice = document.querySelector(".basket-ticket-price") as HTMLElement
 
-export let gameConfig = {
+export const gameConfig = {
   ticketPrice: 200,
   limitNumber: 6,
   amountNumber: 46,

@@ -24,7 +24,7 @@
   "version": "1.0.0",
   "description": "Lottery",
   "main": "index.ts",
-  "repository": "https://github.com/findelman/Loto-Moon",
+  "repository": "https://github.com/findelman/Lotto-Moon",
   "author": "Alisher Zhakupov",
   "license": "MIT",
   "dependencies": {
