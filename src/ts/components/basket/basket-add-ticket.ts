@@ -3,8 +3,8 @@ import { basketDrawSumm } from "./basket-draw-summ"
 
 // Счетчик суммы в баскете
 export const basketAddTicket = (basketObj, basketPrice) => {
-  let all = document.querySelectorAll(".ticket")
-  all.forEach((e: HTMLElement, index) => {
+  const tickets = document.querySelectorAll(".ticket")
+  tickets.forEach((e: HTMLElement, index) => {
     basketObj.delete(index)
     if (e.dataset.ticketComplete === "true") {
       basketObj.set(index, parseInt(e.dataset.ticketPrice))

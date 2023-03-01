@@ -1,5 +1,7 @@
+import { basketDrawSumm } from "../basket/basket-draw-summ"
+
 // Удалить билет
-export const ticketRemoveF = (ticket, index, ticketOut) => {
+export const ticketRemoveF = (ticket, index, ticketOut, basketObj, basketPrice) => {
   let tickets = document.querySelectorAll<HTMLElement>(".ticket")
   const ticketRemove = ticket.querySelector(".ticket-remove") as HTMLElement
   ticketRemove.addEventListener("click", () => {
@@ -12,6 +14,8 @@ export const ticketRemoveF = (ticket, index, ticketOut) => {
     })
 
     delete ticketOut[index]
-    console.log(index,ticketOut)
+    console.log(index, ticketOut)
+    basketObj.delete(index)
+    basketDrawSumm(basketObj, basketPrice)
   })
 }

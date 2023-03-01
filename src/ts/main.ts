@@ -23,7 +23,7 @@ const newBasket = new Map()
 const basketBtn = document.querySelector(".basket-btn") as HTMLElement
 const basketPrice = document.querySelector(".basket-ticket-price") as HTMLElement
 
-export const gameConfig = {
+const gameConfig = {
   ticketPrice: 200,
   limitNumber: 6,
   amountNumber: 46,
@@ -41,7 +41,7 @@ const _gameConfig = (_ticketPrice, _limitNumber, _amountNumber, _gameName) => {
 // Меняем конфигурацию при смене лотереи
 swiper.on("slideChangeTransitionStart", () => {
   const activeSlide = document.querySelector(".swiper-slide-active") as HTMLElement
-  let [digitLimit, totalDigits] = activeSlide.dataset.game.split("/")
+  const [digitLimit, totalDigits] = activeSlide.dataset.game.split("/")
   _gameConfig(activeSlide.dataset.price, digitLimit, totalDigits, activeSlide.dataset.game)
 
   notificationBox()
@@ -62,7 +62,7 @@ addTicketBtn.addEventListener("click", () => {
   ticketClick()
 
   // свайп к последнему слайду
-  let ticket = document.querySelectorAll(".ticket")
+  const ticket = document.querySelectorAll(".ticket")
   ticket[ticket.length - 1].scrollIntoView()
 })
 
@@ -85,24 +85,9 @@ function ticketClick() {
     })
 
     ticketAutofill(tikcetsNum, ticket)
-    ticketRemoveF(ticket, index, ticketOut)
+    ticketRemoveF(ticket, index, ticketOut, newBasket, basketPrice)
   })
 }
-const observerDeleteTicket = new MutationObserver((mutationRecords) => {
-  basketAddTicket(newBasket, basketPrice)
-  let summ: number = 0
-  summ = 0
-  newBasket.forEach((value) => {
-    summ += value
-  })
-
-  basketPrice.textContent = `Сумма: ${summ.toString()}`
-})
-
-// Наблюдаем за удалением
-observerDeleteTicket.observe(ticketOutWrapper, {
-  childList: true,
-})
 
 for (let i = 0; i < 3; i++) {
   ticketGenerate(
